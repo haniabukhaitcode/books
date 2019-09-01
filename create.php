@@ -18,7 +18,7 @@
     if($_POST){
 try{
         // insert query
-        $query= "INSERT INTO booksTable SET title=:title, tag=:tag, author=:author, action=:action";
+        $query= "INSERT INTO booksTable  SET title=:title, tag=:tag, author=:author, action=:action";
         
         //prepare query for execution
         $stmt = $con->prepare($query);
