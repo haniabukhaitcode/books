@@ -16,8 +16,36 @@
 
     <?php 
     if($_POST){
+try{
+        // insert query
+        $query= "INSERT INTO booksTable SET title=:title, tag=:tag, author=:author, action=:action";
         
+        //prepare query for execution
+        $stmt = $con->prepare($query);
 
+        //posted values
+        $title=htmlspecialchars(script_tags($_POST['title']));
+        $tag=htmlspecialchars(script_tags($_POST['tag']));
+        $author=htmlspecialchars(script_tags($_POST['author']));
+        $action=htmlspecialchars(script_tags($_POST['action']));
+
+        //bind the parameters
+        $stmt->bindParam(':title',$title);
+        $stmt->bindParam(':tag',$tag);
+        $stmt->bindParam(':author',$author);
+        $stmt->bindParam(':action',$action);
+
+        //execute the query
+        if($stmt->execute()){
+            echo "<div class='alert alert-success'>Record was saved.</div>";
+        }else{
+            echo "<div class='alert alert-danger'>Unable to save record.</div>";
+        }
+
+
+}catch(PDOException $exception){
+    die("Error " . $exception->getMessage());
+}
 
     }
 ?>
@@ -47,6 +75,13 @@
             <td><input type="text" name="action" class="form-control" /></td>
         </tr>
 
+        <tr>
+            <td></td>
+            <td>
+                <input type='submit' value='Save' class='btn btn-primary' />
+                <a href='index.php' class='btn btn-danger'>Back to read products</a>
+            </td>
+        </tr>
 
     </table>
 
