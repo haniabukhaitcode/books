@@ -1,0 +1,11 @@
+sudo chmod -R 777 /var/www/
+
+sudo apt install php7.2-mysql
+
+sudo nano /etc/php/7.2/apache2/php.ini
+
+=>>> search for error_reporting and make it error_reporting = E_ALL
+=>>> search for display_errors and make it display_errors = On
+
+sudo service apache2 restart
+
