@@ -1,3 +1,11 @@
+<?php
+
+require_once 'config/database.php';
+require_once 'models/books.php';
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,27 +63,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Book1</td>
-                                <td>PHP</td>
-                                <td>Micheal</td>
-                                <td>add/edit/delete</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Book2</td>
-                                <td>JavaScript</td>
-                                <td>Johnson</td>
-                                <td>add/edit/delete</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Book3</td>
-                                <td>Java</td>
-                                <td>John</td>
-                                <td>add/edit/delete</td>
-                            </tr>
+                            <?php
+                            $books = new books();
+                            $rows = $books->select();
+
+                            foreach ($rows as $row) {
+                                ?>
+                                <tr>
+                                    <th scope="row"><?php echo $row['id']; ?></th>
+                                    <td><?php echo $row['title']; ?></td>
+                                    <td><?php echo $row['tag']; ?></td>
+                                    <td><?php echo $row['author']; ?></td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="">Delete</a></td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+
+
                         </tbody>
                     </table>
                 </div>
