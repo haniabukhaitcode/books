@@ -3,27 +3,23 @@ CREATE TABLE `booksTable` (
   `title` varchar(255) NOT NULL DEFAULT "",
   `tag` varchar(255) DEFAULT "",
   `author` varchar(255) NOT NULL DEFAULT "",
-  `action` varchar(255) NOT NULL DEFAULT "",
   PRIMARY KEY (`id`)
 );
 INSERT INTO
-  `booksTable` (`title`, `tag`, `author`, `action`)
+  `booksTable` (`title`, `tag`, `author`)
 VALUES
   (
     'First Book',
     'PHP',
-    'Micheal',
-    'add/edit/delete'
+    'Micheal'
   ),
   (
     'Second Book',
     'JavaScript',
-    'John',
-    'add/edit/delete'
+    'John'
   ),
   (
     'Third Book',
     'Java',
-    'Johnson',
-    'add/edit/delete'
+    'Johnson'
   );

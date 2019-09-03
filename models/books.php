@@ -36,4 +36,15 @@ class books extends database
             header('Location: index.php');
         }
     }
+
+    public function selectOne($id)
+    {
+
+        $sql = "SELECT * FROM booksTable WHERE id = :id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
