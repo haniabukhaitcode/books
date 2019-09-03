@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
         'tag' => $tag,
         'author' => $author
     ];
-    $id = $tag = $_POST['id'];
+    $id = $_POST['id'];
 
     $books = new books();
     $books->update($fields, $id);
@@ -76,6 +76,8 @@ if (isset($_POST['submit'])) {
                     <h4 class="mb-4">Edit Books</h4>
 
                     <form action="" method="post">
+                        <input type="hidden" name="id" value="<?php echo $result['id']; ?>">
+
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" name="title" class="form-control" placeholder="Enter book name" value="<?php echo $result['title']; ?>">
