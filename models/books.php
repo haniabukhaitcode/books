@@ -56,18 +56,17 @@ class books extends database
         foreach ($fields as $key => $value) {
 
             if ($counter === $total_fields) {
-                $set = "$key = :" . $key . ", ";
+                $set = "$key =:" . $key;
                 $st = $st . $set;
-                $counter++;
             } else {
-                $set = "$key = :" . $key . ", ";
+                $set = "$key =:" . $key . ", ";
                 $st = $st . $set;
                 $counter++;
             }
         }
         $sql = "";
-        $sql .= "UPDATE booksTable SET" . $st;
-        $sql .= " WHERE id = " . $id;
+        $sql .= "UPDATE booksTable SET " . $st;
+        $sql .= "WHERE id = " . $id;
         $stmt = $this->connect()->prepare($sql);
 
         foreach ($fields as $key => $value) {

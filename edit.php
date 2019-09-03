@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
         'tag' => $tag,
         'author' => $author
     ];
-    $id = $author = $_POST['id'];
+    $id = $tag = $_POST['id'];
 
     $books = new books();
     $books->update($fields, $id);
