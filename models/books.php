@@ -78,7 +78,7 @@ class books extends database
         $stmtExec = $stmt->execute();
 
         if ($stmtExec) {
-            header("Locaion: index.php");
+            header("Location: index.php");
         }
     }
 }
