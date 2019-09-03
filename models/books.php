@@ -81,4 +81,15 @@ class books extends database
             header("Location: index.php");
         }
     }
+    public function removeById($id)
+    {
+        $sql  = "DELETE FROM booksTable WHERE id = :id";
+
+
+        $stmt = $this->connect()->prepare($sql);
+
+
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+    }
 }
