@@ -47,4 +47,37 @@ class books extends database
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function update($fields, $id)
+    {
+        $st = "";
+        $counter = 1;
+        $total_fields = count($fields);
+
+        foreach ($fields as $key => $value) {
+
+            if ($counter === $total_fields) {
+                $set = "$key = :" . $key . ", ";
+                $st = $st . $set;
+                $counter++;
+            } else {
+                $set = "$key = :" . $key . ", ";
+                $st = $st . $set;
+                $counter++;
+            }
+        }
+        $sql = "";
+        $sql .= "UPDATE booksTable SET" . $st;
+        $sql .= " WHERE id = " . $id;
+        $stmt = $this->connect()->prepare($sql);
+
+        foreach ($fields as $key => $value) {
+            $stmt->bindValue(':' . $key, $value);
+        }
+
+        $stmtExec = $stmt->execute();
+
+        if ($stmtExec) {
+            header("Locaion: index.php");
+        }
+    }
 }

@@ -25,9 +25,10 @@ if (isset($_POST['submit'])) {
         'tag' => $tag,
         'author' => $author
     ];
+    $id = $author = $_POST['id'];
 
     $books = new books();
-    $books->insert($fields);
+    $books->update($fields, $id);
 }
 ?>
 
@@ -87,8 +88,6 @@ if (isset($_POST['submit'])) {
                             <label for="author">Author:</label>
                             <input type="text" name="author" class="form-control" placeholder="Author name" value="<?php echo $result['author']; ?>">
                         </div>
-
-
                         <input type="submit" name="submit" class="btn btn-primary" />
                     </form>
 
