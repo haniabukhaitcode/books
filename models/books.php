@@ -91,5 +91,9 @@ class books extends database
 
         $stmt->bindValue(":id", $id);
         $stmt->execute();
+
+        if ($stmt) {
+            header("Location: index.php");
+        }
     }
 }

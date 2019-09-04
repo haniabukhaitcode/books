@@ -1,3 +1,16 @@
+<?php
+
+require_once 'config/database.php';
+require_once 'models/books.php';
+
+if (isset($_GET['del'])) {
+    $id = $_GET['del'];
+    $books  = new books();
+    $books->removeById($id);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +24,15 @@
 </head>
 
 <body>
-    <h1>Are you sure you want to delete <a class="btn btn-sm btn-success" href="index.php">No</a><a class="btn btn-sm btn-danger" href="index.php?del=<?php echo $_GET['id'] ?>">yes</a></h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <h1>Are you sure you want to delete <a class="btn btn-sm btn-success col-1" href="index.php">No</a> &nbsp; <a class="btn btn-sm btn-danger col-1" href="delete.php?del=<?php echo $_GET['id'] ?>">yes</a></h1>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>

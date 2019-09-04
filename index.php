@@ -3,11 +3,7 @@
 require_once 'config/database.php';
 require_once 'models/books.php';
 
-if (isset($_GET['del'])) {
-    $id = $_GET['del'];
-    $books  = new books();
-    $books->removeById($id);
-}
+
 
 ?>
 
