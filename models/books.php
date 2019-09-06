@@ -96,4 +96,17 @@ class books extends database
             header("Location: index.php");
         }
     }
+
+    public function selectTag()
+    {
+        $sql = "SELECT * FROM tagTable";
+        $result = $this->connect()->query($sql);
+
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
 }

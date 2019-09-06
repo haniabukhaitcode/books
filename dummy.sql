@@ -1,100 +1,15 @@
-insert into booksTable (id, Title, Tag, Author) values (1, 'Tres-Zap', 'biz', 'rgallahar0@w3.org');
-insert into booksTable (id, Title, Tag, Author) values (2, 'Latlux', 'com', 'aperillio1@tinyurl.com');
-insert into booksTable (id, Title, Tag, Author) values (3, 'Treeflex', 'org', 'bgrindley2@parallels.com');
-insert into booksTable (id, Title, Tag, Author) values (4, 'Voyatouch', 'com', 'smcculley3@wufoo.com');
-insert into booksTable (id, Title, Tag, Author) values (5, 'Tresom', 'edu', 'aslaight4@eventbrite.com');
-insert into booksTable (id, Title, Tag, Author) values (6, 'Fix San', 'edu', 'hkenington5@clickbank.net');
-insert into booksTable (id, Title, Tag, Author) values (7, 'Mat Lam Tam', 'net', 'ibaumer6@ustream.tv');
-insert into booksTable (id, Title, Tag, Author) values (8, 'Bigtax', 'info', 'gwaiton7@instagram.com');
-insert into booksTable (id, Title, Tag, Author) values (9, 'Tin', 'name', 'csodeau8@cargocollective.com');
-insert into booksTable (id, Title, Tag, Author) values (10, 'Home Ing', 'mil', 'dbowater9@businessweek.com');
-insert into booksTable (id, Title, Tag, Author) values (11, 'Veribet', 'net', 'vhitzmanna@umich.edu');
-insert into booksTable (id, Title, Tag, Author) values (12, 'Temp', 'com', 'kstempb@webmd.com');
-insert into booksTable (id, Title, Tag, Author) values (13, 'Tres-Zap', 'net', 'cseakc@opensource.org');
-insert into booksTable (id, Title, Tag, Author) values (14, 'Konklux', 'biz', 'cbowend@hatena.ne.jp');
-insert into booksTable (id, Title, Tag, Author) values (15, 'Otcom', 'mil', 'bfridde@wired.com');
-insert into booksTable (id, Title, Tag, Author) values (16, 'Wrapsafe', 'mil', 'efinniganf@webs.com');
-insert into booksTable (id, Title, Tag, Author) values (17, 'Span', 'com', 'hshurrockg@eepurl.com');
-insert into booksTable (id, Title, Tag, Author) values (18, 'Sonsing', 'name', 'lnormansellh@miitbeian.gov.cn');
-insert into booksTable (id, Title, Tag, Author) values (19, 'Cardguard', 'info', 'bemilieni@ucsd.edu');
-insert into booksTable (id, Title, Tag, Author) values (20, 'Andalax', 'mil', 'jrobersj@fema.gov');
-insert into booksTable (id, Title, Tag, Author) values (21, 'Zamit', 'com', 'bpettwoodk@bbc.co.uk');
-insert into booksTable (id, Title, Tag, Author) values (22, 'Treeflex', 'edu', 'aroantreel@kickstarter.com');
-insert into booksTable (id, Title, Tag, Author) values (23, 'It', 'info', 'nbartoshevichm@vkontakte.ru');
-insert into booksTable (id, Title, Tag, Author) values (24, 'Veribet', 'net', 'epenrightn@altervista.org');
-insert into booksTable (id, Title, Tag, Author) values (25, 'Span', 'name', 'lbeamondo@cyberchimps.com');
-insert into booksTable (id, Title, Tag, Author) values (26, 'Sonsing', 'edu', 'frusep@arizona.edu');
-insert into booksTable (id, Title, Tag, Author) values (27, 'Namfix', 'edu', 'jschoularq@columbia.edu');
-insert into booksTable (id, Title, Tag, Author) values (28, 'Sub-Ex', 'org', 'hfarronr@barnesandnoble.com');
-insert into booksTable (id, Title, Tag, Author) values (29, 'Stronghold', 'biz', 'cboords@merriam-webster.com');
-insert into booksTable (id, Title, Tag, Author) values (30, 'Ventosanzap', 'mil', 'lwattamt@tinyurl.com');
-insert into booksTable (id, Title, Tag, Author) values (31, 'Sub-Ex', 'net', 'lmerwoodu@japanpost.jp');
-insert into booksTable (id, Title, Tag, Author) values (32, 'Domainer', 'net', 'mpigottv@1und1.de');
-insert into booksTable (id, Title, Tag, Author) values (33, 'Domainer', 'name', 'mjanatkaw@redcross.org');
-insert into booksTable (id, Title, Tag, Author) values (34, 'Cardguard', 'name', 'graffinx@ovh.net');
-insert into booksTable (id, Title, Tag, Author) values (35, 'Asoka', 'com', 'fharstony@friendfeed.com');
-insert into booksTable (id, Title, Tag, Author) values (36, 'Andalax', 'gov', 'tpleagerz@bizjournals.com');
-insert into booksTable (id, Title, Tag, Author) values (37, 'Solarbreeze', 'gov', 'npetrik10@sfgate.com');
-insert into booksTable (id, Title, Tag, Author) values (38, 'Latlux', 'org', 'mhefner11@slideshare.net');
-insert into booksTable (id, Title, Tag, Author) values (39, 'Fix San', 'edu', 'bcockarill12@virginia.edu');
-insert into booksTable (id, Title, Tag, Author) values (40, 'Lotstring', 'biz', 'ctiebe13@phpbb.com');
-insert into booksTable (id, Title, Tag, Author) values (41, 'Zathin', 'biz', 'jantonikov14@census.gov');
-insert into booksTable (id, Title, Tag, Author) values (42, 'Latlux', 'com', 'mrodrig15@toplist.cz');
-insert into booksTable (id, Title, Tag, Author) values (43, 'Matsoft', 'net', 'erosenstiel16@usatoday.com');
-insert into booksTable (id, Title, Tag, Author) values (44, 'Sonsing', 'biz', 'amcfaul17@gizmodo.com');
-insert into booksTable (id, Title, Tag, Author) values (45, 'Bamity', 'edu', 'lwythill18@reddit.com');
-insert into booksTable (id, Title, Tag, Author) values (46, 'Overhold', 'mil', 'fkilfoyle19@huffingtonpost.com');
-insert into booksTable (id, Title, Tag, Author) values (47, 'Cardguard', 'name', 'rburchnall1a@youku.com');
-insert into booksTable (id, Title, Tag, Author) values (48, 'Latlux', 'com', 'nschurcke1b@flavors.me');
-insert into booksTable (id, Title, Tag, Author) values (49, 'Kanlam', 'mil', 'bgores1c@feedburner.com');
-insert into booksTable (id, Title, Tag, Author) values (50, 'Mat Lam Tam', 'gov', 'mrudwell1d@photobucket.com');
-insert into booksTable (id, Title, Tag, Author) values (51, 'Zontrax', 'edu', 'mrand1e@list-manage.com');
-insert into booksTable (id, Title, Tag, Author) values (52, 'Tin', 'info', 'jmceneny1f@salon.com');
-insert into booksTable (id, Title, Tag, Author) values (53, 'Hatity', 'name', 'bfrodsham1g@dell.com');
-insert into booksTable (id, Title, Tag, Author) values (54, 'Job', 'com', 'kgounard1h@topsy.com');
-insert into booksTable (id, Title, Tag, Author) values (55, 'Lotstring', 'biz', 'bpettyfar1i@oaic.gov.au');
-insert into booksTable (id, Title, Tag, Author) values (56, 'Cookley', 'com', 'dknellen1j@about.com');
-insert into booksTable (id, Title, Tag, Author) values (57, 'Vagram', 'biz', 'clamputt1k@g.co');
-insert into booksTable (id, Title, Tag, Author) values (58, 'Konklux', 'edu', 'ftullis1l@tiny.cc');
-insert into booksTable (id, Title, Tag, Author) values (59, 'Veribet', 'gov', 'tgraves1m@theatlantic.com');
-insert into booksTable (id, Title, Tag, Author) values (60, 'Bitwolf', 'com', 'prenne1n@thetimes.co.uk');
-insert into booksTable (id, Title, Tag, Author) values (61, 'Hatity', 'net', 'msteger1o@eventbrite.com');
-insert into booksTable (id, Title, Tag, Author) values (62, 'Y-find', 'com', 'zbimrose1p@imdb.com');
-insert into booksTable (id, Title, Tag, Author) values (63, 'Zathin', 'org', 'amckellen1q@jugem.jp');
-insert into booksTable (id, Title, Tag, Author) values (64, 'Bitwolf', 'net', 'fharriday1r@purevolume.com');
-insert into booksTable (id, Title, Tag, Author) values (65, 'Wrapsafe', 'com', 'fdrakard1s@mysql.com');
-insert into booksTable (id, Title, Tag, Author) values (66, 'Greenlam', 'org', 'kbertram1t@imgur.com');
-insert into booksTable (id, Title, Tag, Author) values (67, 'Fix San', 'edu', 'temblow1u@skyrock.com');
-insert into booksTable (id, Title, Tag, Author) values (68, 'Y-find', 'net', 'blosebie1v@state.gov');
-insert into booksTable (id, Title, Tag, Author) values (69, 'Quo Lux', 'biz', 'whenrichsen1w@va.gov');
-insert into booksTable (id, Title, Tag, Author) values (70, 'Zontrax', 'info', 'dvella1x@oakley.com');
-insert into booksTable (id, Title, Tag, Author) values (71, 'Solarbreeze', 'gov', 'lcurlis1y@omniture.com');
-insert into booksTable (id, Title, Tag, Author) values (72, 'Otcom', 'org', 'cplows1z@pagesperso-orange.fr');
-insert into booksTable (id, Title, Tag, Author) values (73, 'Otcom', 'edu', 'jdufaur20@bravesites.com');
-insert into booksTable (id, Title, Tag, Author) values (74, 'Bigtax', 'edu', 'lcorro21@abc.net.au');
-insert into booksTable (id, Title, Tag, Author) values (75, 'Konklab', 'org', 'mseers22@purevolume.com');
-insert into booksTable (id, Title, Tag, Author) values (76, 'Zaam-Dox', 'edu', 'dearp23@github.io');
-insert into booksTable (id, Title, Tag, Author) values (77, 'Trippledex', 'edu', 'aoffin24@plala.or.jp');
-insert into booksTable (id, Title, Tag, Author) values (78, 'Zamit', 'biz', 'rbonett25@joomla.org');
-insert into booksTable (id, Title, Tag, Author) values (79, 'Zontrax', 'edu', 'cbudd26@alexa.com');
-insert into booksTable (id, Title, Tag, Author) values (80, 'Cookley', 'mil', 'jhodgin27@opensource.org');
-insert into booksTable (id, Title, Tag, Author) values (81, 'Gembucket', 'info', 'ohurdiss28@si.edu');
-insert into booksTable (id, Title, Tag, Author) values (82, 'Temp', 'name', 'hhurrion29@google.com.au');
-insert into booksTable (id, Title, Tag, Author) values (83, 'Viva', 'mil', 'tmacvain2a@xing.com');
-insert into booksTable (id, Title, Tag, Author) values (84, 'Tempsoft', 'edu', 'nabramovici2b@guardian.co.uk');
-insert into booksTable (id, Title, Tag, Author) values (85, 'Zontrax', 'biz', 'kfalcus2c@ibm.com');
-insert into booksTable (id, Title, Tag, Author) values (86, 'Temp', 'org', 'tscarce2d@usa.gov');
-insert into booksTable (id, Title, Tag, Author) values (87, 'Toughjoyfax', 'gov', 'avanderweedenburg2e@umn.edu');
-insert into booksTable (id, Title, Tag, Author) values (88, 'Asoka', 'info', 'ephizakarley2f@pagesperso-orange.fr');
-insert into booksTable (id, Title, Tag, Author) values (89, 'Transcof', 'edu', 'dnelsen2g@unesco.org');
-insert into booksTable (id, Title, Tag, Author) values (90, 'Voltsillam', 'gov', 'apettinger2h@canalblog.com');
-insert into booksTable (id, Title, Tag, Author) values (91, 'Zontrax', 'net', 'bwolsey2i@netscape.com');
-insert into booksTable (id, Title, Tag, Author) values (92, 'Cardguard', 'info', 'felgie2j@hugedomains.com');
-insert into booksTable (id, Title, Tag, Author) values (93, 'Aerified', 'org', 'hgrishukhin2k@yahoo.com');
-insert into booksTable (id, Title, Tag, Author) values (94, 'Mat Lam Tam', 'com', 'ascotney2l@gmpg.org');
-insert into booksTable (id, Title, Tag, Author) values (95, 'Tin', 'edu', 'bblatcher2m@mozilla.com');
-insert into booksTable (id, Title, Tag, Author) values (96, 'Stim', 'name', 'sheinrich2n@fema.gov');
-insert into booksTable (id, Title, Tag, Author) values (97, 'Prodder', 'name', 'afibben2o@omniture.com');
-insert into booksTable (id, Title, Tag, Author) values (98, 'Duobam', 'name', 'wjohananov2p@bandcamp.com');
-insert into booksTable (id, Title, Tag, Author) values (99, 'Cardify', 'mil', 'sbeake2q@deliciousdays.com');
-insert into booksTable (id, Title, Tag, Author) values (100, 'Lotlux', 'org', 'kmacinherney2r@dion.ne.jp');
+CREATE TABLE `tagTable` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(255) DEFAULT "",
+  PRIMARY KEY (`id`)
+);
+INSERT INTO
+  `tagTable` (`tag`)
+VALUES
+  ('PHP'),
+  ('JavaScript'),
+  ('C#'),
+  ('Java'),
+  ('GoLang'),
+  ('C'),
+  ('C++')

@@ -1,32 +1,23 @@
 <?php
-
 require_once 'config/database.php';
 require_once 'models/books.php';
 
-
 if (isset($_GET['id'])) {
     $uid = $_GET['id'];
-
     $books = new books();
-
     $result = $books->selectOne($uid);
 }
 
-
 if (isset($_POST['submit'])) {
-
     $title = $_POST['title'];
     $tag = $_POST['tag'];
     $author = $_POST['author'];
-
-
     $fields = [
         'title' => $title,
         'tag' => $tag,
         'author' => $author
     ];
     $id = $_POST['id'];
-
     $books = new books();
     $books->update($fields, $id);
 }
@@ -84,7 +75,17 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="tag">Tag</label>
-                            <input type="text" name="tag" class="form-control" placeholder="Tag" value="<?php echo $result['tag']; ?>">
+
+                            <select>
+                                <?php
+                                $books = new books();
+                                $rows = $books->selectTag();
+                                foreach ($rows as $row) : ?>
+                                    <option>
+                                        <a name="tag"><?php echo $row['tag']; ?></a>
+                                    </option>
+                                <?php endforeach ?>
+
                         </div>
                         <div class="form-group">
                             <label for="author">Author:</label>
