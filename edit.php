@@ -1,5 +1,5 @@
 <?php
-$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
+$idG = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
 require_once 'config/database.php';
 require_once 'models/books.php';
@@ -11,7 +11,7 @@ $db = $database->getConnection();
 $book = new Book($db);
 $tag = new Tag($db);
 
-$book->id = $id;
+$book->id = $idG;
 $book->readOne();
 
 if ($_POST) {

@@ -45,13 +45,12 @@ class Book
     }
 
     //**Read All**
-    function readAll($from_record_num, $records_per_page)
+    function readAll()
     {
         $query = " SELECT * FROM 
             " . $this->table_name . "
            ORDER BY 
-           author ASC 
-           LIMIT {$from_record_num}, {$records_per_page}";
+           author ASC";
 
 
         $stmt = $this->conn->prepare($query);

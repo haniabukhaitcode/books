@@ -35,7 +35,6 @@ if (isset($_GET['del'])) {
         </div>
     </div>
 
-
 </body>
 
 </html>

@@ -1,33 +1,22 @@
 <?php
 
-
 require_once 'config/database.php';
 require_once 'models/books.php';
 require_once 'models/tags.php';
 
-// get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// pass connection to objects
-$book = new Books($db);
-$tags = new Tags($db);
-
-if (isset($_POST['submit'])) {
-
-    $title = $_POST['title'];
-    $tag = $_POST['tag'];
-    $author = $_POST['author'];
+$book = new Book($db);
+$tag = new Tag($db);
 
 
-    $fields = [
-        'title' => $title,
-        'tag' => $tag,
-        'author' => $author
-    ];
 
-    $books = new books();
-    $books->insert($fields);
+if ($_POST) {
+    $book->title = $_POST['title'];
+    $book->author = $_POST['author'];
+    $book->tag_id = $_POST['tag_id'];
+    $book->create() ? true : false;
 }
 ?>
 
@@ -74,20 +63,36 @@ if (isset($_POST['submit'])) {
                 <div class="jumbotron">
                     <h4 class="mb-4">Add Books</h4>
 
-                    <form action="" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" name="title" class="form-control" aria-describedby="emailHelp" placeholder="Enter book name">
                         </div>
+
                         <div class="form-group">
-                            <label for="tag">Tag</label>
-                            <input type="text" name="tag" class="form-control" placeholder="Tag">
-                        </div>
-                        <div class="form-group">
-                            <label for="author">Author:</label>
+                            <label for="author">Author</label>
                             <input type="text" name="author" class="form-control" placeholder="Author name">
                         </div>
 
+                        <div>
+                            <label>Tag</label>
+                            <div class="mb-3">
+                                <?php
+                                $stmt = $tag->read();
+
+                                // put them in a select drop-down
+                                echo "<select class='form-control' name='tag_id'>";
+                                echo "<option>Please select...</option>";
+
+                                while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_tag);
+                                    echo "<option value='{$id}'>{$tag}</option>";
+                                }
+
+                                echo "</select>";
+                                ?>
+                            </div>
+                        </div>
 
                         <input type="submit" name="submit" class="btn btn-primary" />
                     </form>

@@ -79,7 +79,7 @@ $tag = new Tag($db);
                         <tbody>
                             <?php
 
-                            $books = $book->readAll($from_record_num, $records_per_page);
+                            $books = $book->readAll();
                             foreach ($books as $row) :  ?>
                                 <tr>
                                     <th scope="row"><?php echo $row['id']; ?></th>
