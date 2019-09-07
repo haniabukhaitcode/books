@@ -60,8 +60,8 @@ class Book
 
         return $stmt;
     }
-    //**Count All**
-    function countAll()
+    //**Count All Paging Books**
+    public function countAll()
     {
         $query = "SELECT id FROM " . $this->table_name . "";
         $stmt = $this->conn->prepare($query);
@@ -124,13 +124,16 @@ class Book
             header("Location: index.php");
         }
     }
-    //**Delete**
-    function delete()
-    {
-        $query = "SELECT * FROM " . $this->table_name . "WHERE id = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->id);
 
-        return $stmt;
+    //**Delete**
+    public function delete($id)
+    {
+        $query = "DELETE FROM books WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+        if ($stmt) {
+            header("Location: index.php");
+        }
     }
 }

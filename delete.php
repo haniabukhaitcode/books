@@ -3,10 +3,13 @@
 require_once 'config/database.php';
 require_once 'models/books.php';
 
+$database = new Database();
+$db = $database->getConnection();
+
 if (isset($_GET['del'])) {
     $id = $_GET['del'];
-    $books  = new books();
-    $books->removeById($id);
+    $book = new Book($db);
+    $book->delete($id);
 }
 
 ?>
