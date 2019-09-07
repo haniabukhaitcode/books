@@ -61,7 +61,7 @@ class Book
         return $stmt;
     }
     //**Count All**
-    function countRows()
+    function countAll()
     {
         $query = "SELECT id FROM " . $this->table_name . "";
         $stmt = $this->conn->prepare($query);
@@ -112,13 +112,17 @@ class Book
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         //bindParam()
-        $stmt->bindParam(':=title', $this->title);
-        $stmt->bindParam(':=author', $this->author);
-        $stmt->bindParam(':=tag_id', $this->tag_id);
-        $stmt->bindParam(':=id', $this->id);
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':author', $this->author);
+        $stmt->bindParam(':tag_id', $this->tag_id);
+        $stmt->bindParam(':id', $this->id);
 
         //ternery return 
-        $stmt->execute() ? true : false;
+        $stmtExec = $stmt->execute();
+
+        if ($stmtExec) {
+            header("Location: index.php");
+        }
     }
     //**Delete**
     function delete()

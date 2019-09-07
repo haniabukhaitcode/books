@@ -48,5 +48,5 @@ VALUES
   (3, 'JAVASCRIPT'),
   (4, 'C#'),
   (5, 'Python'),
-  (6, 'GoLane'),
+  (6, 'GoLang'),
   (7, 'C++');
