@@ -1,5 +1,5 @@
 <?php
-class Product
+class Book
 {
 
     // database connection and table name
@@ -68,16 +68,40 @@ class Product
         $totalRows = $stmt->rowCount();
         return $totalRows;
     }
+    //**Read One ID**
+    function readOne()
+    {
+
+        $query = "SELECT *
+        FROM " . $this->table_name . "
+        WHERE id = ?
+        LIMIT 0,1";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->title = $row['title'];
+        $this->author = $row['author'];
+        $this->tag_id = $row['tag_id'];
+    }
+
+
+
     //**Update**
     function update()
     {
-        $query =
-            "SELECT * FROM 
-        " . $this->table_name . " 
-            SET title=:title, author=:author, tag_id=:tag_id
-            WHERE 
-            id=:id
-        ";
+        $query = "UPDATE
+        " . $this->table_name . "
+        SET
+            title = :title,
+            author = :author,
+            tag_id = :tag_id
+    
+        WHERE
+            id = :id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -85,11 +109,13 @@ class Product
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author = htmlspecialchars(strip_tags($this->author));
         $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
         //bindParam()
         $stmt->bindParam(':=title', $this->title);
         $stmt->bindParam(':=author', $this->author);
         $stmt->bindParam(':=tag_id', $this->tag_id);
+        $stmt->bindParam(':=id', $this->id);
 
         //ternery return 
         $stmt->execute() ? true : false;

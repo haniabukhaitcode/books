@@ -1,25 +1,28 @@
 <?php
+$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
+
+
+
 require_once 'config/database.php';
 require_once 'models/books.php';
+require_once 'models/tags.php';
 
-if (isset($_GET['id'])) {
-    $uid = $_GET['id'];
-    $books = new books();
-    $result = $books->selectOne($uid);
-}
 
-if (isset($_POST['submit'])) {
-    $title = $_POST['title'];
-    $tag = $_POST['tag'];
-    $author = $_POST['author'];
-    $fields = [
-        'title' => $title,
-        'tag' => $tag,
-        'author' => $author
-    ];
-    $id = $_POST['id'];
-    $books = new books();
-    $books->update($fields, $id);
+
+$database = new Database();
+$db = $database->getConnection();
+
+$book = new Book($db);
+$tag = new Tag($db);
+
+$book->id = $id;
+$book->readOne();
+
+if ($_POST) {
+    $book->title = $_POST['title'];
+    $book->author = $_POST['author'];
+    $book->tag_id = $_POST['tag_id'];
+    $book->update();
 }
 ?>
 
@@ -66,32 +69,46 @@ if (isset($_POST['submit'])) {
                 <div class="jumbotron">
                     <h4 class="mb-4">Edit Books</h4>
 
-                    <form action="" method="post">
-                        <input type="hidden" name="id" value="<?php echo $result['id']; ?>">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
 
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" name="title" class="form-control" placeholder="Enter book name" value="<?php echo $result['title']; ?>">
+                        <div>
+                            <label>Title</label>
+                            <input type='text' name='title' value='<?php echo $book->title; ?>' class='form-control' /></label>
                         </div>
-                        <div class="form-group">
-                            <label for="tag">Tag</label>
 
-                            <select>
+                        <div>
+                            <label>Author</label>
+                            <input type='text' name='author' value='<?php echo $book->author; ?>' class='form-control' /></label>
+                        </div>
+
+                        <div>
+                            <label>Tag</label>
+
+                            <!-- categories select drop-down will be here -->
+                            <div class="mb-3">
                                 <?php
-                                $books = new books();
-                                $rows = $books->selectTag();
-                                foreach ($rows as $row) : ?>
-                                    <option>
-                                        <a name="tag"><?php echo $row['tag']; ?></a>
-                                    </option>
-                                <?php endforeach ?>
+                                $stmt = $tag->read();
 
-                        </div>
-                        <div class="form-group">
-                            <label for="author">Author:</label>
-                            <input type="text" name="author" class="form-control" placeholder="Author name" value="<?php echo $result['author']; ?>">
-                        </div>
-                        <input type="submit" name="submit" class="btn btn-primary" />
+                                // put them in a select drop-down
+                                echo "<select class='form-control' name='tag_id'>";
+
+                                echo "<option>Please select...</option>";
+                                while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_tag);
+
+                                    // current category of the book must be selected
+                                    if ($book->tag_id == $id) {
+                                        echo "<option value='$id' selected>";
+                                    } else {
+                                        echo "<option value='$id'>";
+                                    }
+
+                                    echo "$tag</option>";
+                                }
+                                echo "</select>";
+                                ?>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
                     </form>
 
                 </div>

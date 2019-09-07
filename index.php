@@ -1,8 +1,15 @@
 <?php
 
+require_once 'config/recordLimit.php';
 require_once 'config/database.php';
 require_once 'models/books.php';
+require_once 'models/tags.php';
 
+$database = new Database();
+$db = $database->getConnection();
+
+$book = new Book($db);
+$tag = new Tag($db);
 
 
 ?>
@@ -57,22 +64,29 @@ require_once 'models/books.php';
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Tag</th>
                                 <th scope="col">Auther</th>
+                                <th scope="col">Tag</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $books = new books();
-                            $rows = $books->select();
-                            foreach ($rows as $row) : ?>
+
+                            $books = $book->readAll($from_record_num, $records_per_page);
+                            foreach ($books as $row) :  ?>
+
                                 <tr>
                                     <th scope="row"><?php echo $row['id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo $row['author']; ?></td>
-                                    <td></td>
+                                    <?php echo "<td>";
+                                        $tag->id = $row['tag_id'];
+                                        $tag->readName();
+                                        echo $tag->tag;
+                                        echo "</td>";
+                                        ?>
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
+                                    </td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>

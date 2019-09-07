@@ -4,7 +4,7 @@ class Tag
 
     // database connection and table title
     private $conn;
-    private $table_title = "tags";
+    private $table_name = "tags";
 
     // object properties
     public $id;
@@ -22,7 +22,7 @@ class Tag
         $query = "SELECT
                     id, tag
                 FROM
-                    " . $this->table_title . "
+                    " . $this->table_name . "
                 ORDER BY
                     tag";
 
@@ -32,11 +32,11 @@ class Tag
         return $stmt;
     }
 
-    // Read tags name by ID
+    // Read tags by ID
     function readName()
     {
 
-        $query = "SELECT tag FROM " . $this->table_title . " WHERE id = ? limit 0,1";
+        $query = "SELECT tag FROM " . $this->table_name . " WHERE id = ? limit 0,1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
@@ -44,6 +44,6 @@ class Tag
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->title = $row['tag'];
+        $this->tag = $row['tag'];
     }
 }
