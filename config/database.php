@@ -1,21 +1,26 @@
 <?php
-
-class database
+class Database
 {
 
-    protected function connect()
+    // specify your own database credentials
+    private $host = "localhost";
+    private $db_name = "BookStore";
+    private $username = "root";
+    private $password = "";
+    public $conn;
+
+    // get the database connection
+    public function getConnection()
     {
+
+        $this->conn = null;
+
         try {
-            // --
-            $conn = new PDO("mysql:host=localhost;dbname=myBookStore", 'hani', 'Hani.123!@#');
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $conn;
-            // --
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+        } catch (PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
         }
-        //--
-        catch (PDOException $err) {
-            echo "Connection Error: " . $err->getMessage();
-            //--
-        }
+
+        return $this->conn;
     }
 }

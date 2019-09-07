@@ -70,8 +70,8 @@ require_once 'models/books.php';
                                 <tr>
                                     <th scope="row"><?php echo $row['id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['tag']; ?></td>
                                     <td><?php echo $row['author']; ?></td>
+                                    <td></td>
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
                                 </tr>
                             <?php endforeach ?>

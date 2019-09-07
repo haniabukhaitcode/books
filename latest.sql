@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `author` text NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = MyISAM DEFAULT CHARSET = latin1 AUTO_INCREMENT = 38;
 -- Dumping data for table `Books`
@@ -12,7 +12,7 @@ INSERT INTO
     `id`,
     `title`,
     `author`,
-    `category_id`
+    `tag_id`
   )
 VALUES
   (1, 'Book1', 'Author1', 1),
@@ -33,15 +33,15 @@ VALUES
   (30, 'Book16', 'Author16', 2),
   (31, 'Book17', 'Author17', 2),
   (32, 'Book18', 'Author18', 3);
--- Table structure for table `categories`
+-- Table structure for table `tags`
   CREATE TABLE IF NOT EXISTS `tags` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `tag` varchar(256) NOT NULL,
     PRIMARY KEY (`id`)
   ) ENGINE = MyISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT = 4;
--- Dumping data for table `categories`
+-- Dumping data for table `tags`
 INSERT INTO
-  `categories` (`id`, `tag`)
+  `tags` (`id`, `tag`)
 VALUES
   (1, 'PHP'),
   (2, 'JAVA'),

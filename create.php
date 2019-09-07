@@ -1,7 +1,17 @@
 <?php
 
+
 require_once 'config/database.php';
 require_once 'models/books.php';
+require_once 'models/tags.php';
+
+// get database connection
+$database = new Database();
+$db = $database->getConnection();
+
+// pass connection to objects
+$book = new Books($db);
+$tags = new Tags($db);
 
 if (isset($_POST['submit'])) {
 

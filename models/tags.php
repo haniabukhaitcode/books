@@ -1,10 +1,10 @@
 <?php
-class Category
+class Tag
 {
 
     // database connection and table title
     private $conn;
-    private $table_title = "categories";
+    private $table_title = "tags";
 
     // object properties
     public $id;
@@ -32,7 +32,7 @@ class Category
         return $stmt;
     }
 
-    // used to read category name by its ID
+    // Read tags name by ID
     function readName()
     {
 

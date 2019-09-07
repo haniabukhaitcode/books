@@ -1,112 +1,106 @@
 <?php
-
-class books extends database
+class Product
 {
-    public function select()
+
+    // database connection and table name
+    private $conn;
+    private $table_name = "books";
+
+    // object properties
+    public $id;
+    public $title;
+    public $author;
+    public $tag_id;
+
+
+    public function __construct($db)
     {
-        $sql = "SELECT * FROM booksTable";
-        $result = $this->connect()->query($sql);
-
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) {
-                $data[] = $row;
-            }
-            return $data;
-        }
-    }
-    public function insert($fields)
-    {
-        //implode is a php method joins array elements with a string 
-        $implodeColumns = implode(', ', array_keys($fields));
-
-        $implodePlaceholder = implode(", :", array_keys($fields));
-
-        //INSERT INTO booksTable (title, tag, author) VALUES(:title, :tag, :author)
-        $sql = "INSERT INTO booksTable ($implodeColumns) VALUES(:" . $implodePlaceholder . ")";
-
-        $stmt = $this->connect()->prepare($sql);
-
-        foreach ($fields as $key => $value) {
-            $stmt->bindValue(":" . $key, $value);
-        }
-
-        $stmtExec = $stmt->execute();
-
-        if ($stmtExec) {
-            header('Location: index.php');
-        }
+        $this->conn = $db;
     }
 
-    public function selectOne($id)
+    //**Create**
+    function create()
     {
+        //sql
+        $query = "INSERT INTO " . $this->table_name .
+            "SET title=:title, author=:author, tag_id=:tag_id";
 
-        $sql = "SELECT * FROM booksTable WHERE id = :id";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result;
+        //statement connection with prepare    
+        $stmt = $this->conn->prepare($query);
+
+        // **Controlling Values From User**
+        // remving tags (htmlspecialchars)
+        // allowing variables only (strip_tags)
+        $this->title = htmlspecialchars(strip_tags($this->title));
+        $this->author = htmlspecialchars(strip_tags($this->author));
+        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+
+        // bind values
+        $stmt->bindParam(":title", $this->title);
+        $stmt->bindParam(":author", $this->author);
+        $stmt->bindParam(":tag_id", $this->tag_id);
+
+        //check execution
+        $stmt->execute() ? true : false;
     }
 
-    public function update($fields, $id)
+    //**Read All**
+    function readAll($from_record_num, $records_per_page)
     {
-        $st = "";
-        $counter = 1;
-        $total_fields = count($fields);
-
-        foreach ($fields as $key => $value) {
-
-            if ($counter === $total_fields) {
-                $set = "$key = :" . $key;
-                $st = $st . $set;
-            } else {
-                $set = "$key = :" . $key . ", ";
-                $st = $st . $set;
-                $counter++;
-            }
-        }
-
-        $sql = "";
-        $sql .= "UPDATE booksTable SET " . $st;
-        $sql .= " WHERE id = " . $id;
-        $stmt = $this->connect()->prepare($sql);
-
-        foreach ($fields as $key => $value) {
-            $stmt->bindValue(':' . $key, $value);
-        }
-
-        $stmtExec = $stmt->execute();
-
-        if ($stmtExec) {
-            header("Location: index.php");
-        }
-    }
-    public function removeById($id)
-    {
-        $sql  = "DELETE FROM booksTable WHERE id = :id";
+        $query = " SELECT * FROM 
+            " . $this->table_name . "
+           ORDER BY 
+           author ASC 
+           LIMIT {$from_record_num}, {$records_per_page}";
 
 
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = $this->conn->prepare($query);
 
-
-        $stmt->bindValue(":id", $id);
         $stmt->execute();
 
-        if ($stmt) {
-            header("Location: index.php");
-        }
+        return $stmt;
     }
-
-    public function selectTag()
+    //**Count All**
+    function countRows()
     {
-        $sql = "SELECT * FROM tagTable";
-        $result = $this->connect()->query($sql);
+        $query = "SELECT id FROM " . $this->table_name . "";
+        $stmt = $this->conn->prepare($query);
+        $totalRows = $stmt->rowCount();
+        return $totalRows;
+    }
+    //**Update**
+    function update()
+    {
+        $query =
+            "SELECT * FROM 
+        " . $this->table_name . " 
+            SET title=:title, author=:author, tag_id=:tag_id
+            WHERE 
+            id=:id
+        ";
 
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) {
-                $data[] = $row;
-            }
-            return $data;
-        }
+        $stmt = $this->conn->prepare($query);
+
+        //Control user Values
+        $this->title = htmlspecialchars(strip_tags($this->title));
+        $this->author = htmlspecialchars(strip_tags($this->author));
+        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+
+        //bindParam()
+        $stmt->bindParam(':=title', $this->title);
+        $stmt->bindParam(':=author', $this->author);
+        $stmt->bindParam(':=tag_id', $this->tag_id);
+
+        //ternery return 
+        $stmt->execute() ? true : false;
+    }
+    //**Delete**
+    function delete()
+    {
+        $query = "SELECT * FROM " . $this->table_name . "WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->id);
+
+        return $stmt;
     }
 }
