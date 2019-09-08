@@ -11,7 +11,7 @@ $db = $database->getConnection();
 $book = new Book($db);
 $author = new Author($db);
 
-$book->id = $id;
+$book->book_id = $book_id;
 $book->readOne();
 
 if ($_POST) {
@@ -103,7 +103,7 @@ if ($_POST) {
                             </div>
                             <div>
                                 <label>Tag</label>
-                                <input type='text' name='tag' value='<?php echo $book->tag; ?>' class='form-control' /></label>
+                                <input type='text' name='tag_id' value='<?php echo $book->tag_id; ?>' class='form-control' /></label>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                     </form>

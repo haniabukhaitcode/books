@@ -15,7 +15,7 @@ $author = new Author($db);
 if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];
-    $book->tag = $_POST['tag'];
+    $book->tag_id = $_POST['tag_id'];
     $book->create() ? true : false;
 }
 
@@ -88,8 +88,8 @@ if ($_POST) {
                         </div>
 
                         <div class="form-group">
-                            <label for="tag">Tag</label>
-                            <input type="text" name="tag" class="form-control" placeholder="Enter tag name">
+                            <label for="tag_id">Tag</label>
+                            <input type="text" name="tag_id" class="form-control" placeholder="Enter tag name">
                         </div>
 
                         <input type="submit" name="submit" class="btn btn-primary" />

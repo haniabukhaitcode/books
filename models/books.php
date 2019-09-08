@@ -7,10 +7,10 @@ class Book
     private $table_name = "books";
 
     // object properties
-    public $id;
+    public $book_id;
     public $title;
     public $author_id;
-    public $tag;
+    public $tag_id;
 
     public function __construct($db)
     {
@@ -21,7 +21,7 @@ class Book
     function create()
     {
         //sql
-        $query = "INSERT INTO " . $this->table_name . "(title, author_id, tag) VALUES(:title, :author_id, :tag) ";
+        $query = "INSERT INTO " . $this->table_name . "(title, author_id, tag_id) VALUES(:title, :author_id, :tag_id) ";
         //statement connection with prepare    
         $stmt = $this->conn->prepare($query);
         // **Controlling Values From User**
@@ -29,11 +29,11 @@ class Book
         // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
-        $this->tag = htmlspecialchars(strip_tags($this->tag));
+        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
-        $stmt->bindParam(":tag", $this->tag);
+        $stmt->bindParam(":tag_id", $this->tag_id);
 
         $stmt->execute() ? header("Location: index.php") : false;
     }
@@ -44,7 +44,7 @@ class Book
         $query = " SELECT * FROM 
             " . $this->table_name . "
            ORDER BY 
-           tag ASC";
+           tag_id ASC";
 
 
         $stmt = $this->conn->prepare($query);
@@ -56,7 +56,7 @@ class Book
     //**Count All Paging Books**
     public function countAll()
     {
-        $query = "SELECT id FROM " . $this->table_name . "";
+        $query = "SELECT book_id FROM " . $this->table_name . "";
         $stmt = $this->conn->prepare($query);
         $totalRows = $stmt->rowCount();
         return $totalRows;
@@ -67,17 +67,17 @@ class Book
 
         $query = "SELECT *
         FROM " . $this->table_name . "
-        WHERE id = ?
+        WHERE book_id = ?
         LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(1, $this->book_id);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->title = $row['title'];
-        $this->tag = $row['tag'];
+        $this->tag_id = $row['tag_id'];
         $this->author_id = $row['author_id'];
     }
 
@@ -90,25 +90,25 @@ class Book
         " . $this->table_name . "
         SET
             title = :title,
-            tag = :tag,
+            tag_id = :tag_id,
             author_id = :author_id
     
         WHERE
-            id = :id";
+            book_id = :book_id";
 
         $stmt = $this->conn->prepare($query);
 
         //Control user Values
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
-        $this->tag = htmlspecialchars(strip_tags($this->tag));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+        $this->book_id = htmlspecialchars(strip_tags($this->book_id));
 
         //bindParam()
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':author_id', $this->author_id);
-        $stmt->bindParam(':tag', $this->tag);
-        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':tag_id', $this->tag_id);
+        $stmt->bindParam(':book_id', $this->book_id);
 
         //ternery return 
         $stmtExec = $stmt->execute();
@@ -117,11 +117,11 @@ class Book
     }
 
     //**Delete**
-    public function delete($id)
+    public function delete($book_id)
     {
-        $query = "DELETE FROM books WHERE id = :id";
+        $query = "DELETE FROM books WHERE book_id = :book_id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(":id", $id);
+        $stmt->bindValue(":book_id", $book_id);
         $stmt->execute();
         if ($stmt) {
             header("Location: index.php");

@@ -92,7 +92,7 @@ $author = new Author($db);
                                         echo $author->author;
                                         echo "</td>";
                                         ?>
-                                    <td><?php echo $row['tag']; ?></td>
+                                    <td><?php echo $row['tag_id']; ?></td>
 
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
                                     </td>
