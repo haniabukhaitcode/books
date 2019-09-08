@@ -34,7 +34,8 @@ class Book
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
         $stmt->bindParam(":tag", $this->tag);
-        $stmt->execute();
+
+        $stmt->execute() ? header("Location: index.php") : false;
     }
 
     //**Read All**
@@ -112,9 +113,7 @@ class Book
         //ternery return 
         $stmtExec = $stmt->execute();
 
-        if ($stmtExec) {
-            header("Location: index.php");
-        }
+        $stmtExec ? header("Location: index.php") : print("Error in books.php update function");
     }
 
     //**Delete**

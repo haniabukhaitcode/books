@@ -50,3 +50,38 @@ VALUES
   (5, 'Author5'),
   (6, 'Author6'),
   (7, 'Author7');
+
+
+  CREATE TABLE IF NOT EXISTS `tags` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `tags` VARCHAR (256) NO NULL,
+    PRIMARY KEY (`id`)
+  ) ENGINE = MyISAM DEFAULT CHARSET = utf8 AUTO_INCREMENT = 4;
+
+  INSERT INTO 
+  `tags` (`tag_id`, `tags`)
+
+  VALUES
+  (1, 'Tag1'),
+  (2, 'Tag2'),
+  (3, 'Tag3'),
+  (4, 'Tag4'),
+  (5, 'Tag5'),
+  (6, 'Tag6'),
+  (7, 'Tag7');
+
+CREATE TABLE `books_tags` (  
+  `book_id`  INT(11) NOT NULL,
+  `tag_id` INT(11) NOT NULL,
+  FOREIGN KEY (`book_id`) REFERENCES(`book_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`tag_id`) REFERENCES(`tag_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+   PRIMARY KEY (`book_id`, `tag_id`)
+);
+
+SELECT `b.book_id`, `t.tag_id`, 
+FROM `books b`
+INNER JOIN `books_tags bt`
+ON `b.book_id` = `bt.book_id`
+INNER JOIN `tags t`
+ON `t.tag_id` = `bt.book_id`;   
+
