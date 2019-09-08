@@ -22,8 +22,7 @@ class Book
     function create()
     {
         //sql
-        $query = "INSERT INTO " . $this->table_name .
-            "SET title=:title, author=:author, tag_id=:tag_id";
+        $query = "INSERT INTO " . $this->table_name . " (title,author,tag_id) VALUES(:title,:author,:tag_id) ";
 
         //statement connection with prepare    
         $stmt = $this->conn->prepare($query);
@@ -39,9 +38,7 @@ class Book
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author", $this->author);
         $stmt->bindParam(":tag_id", $this->tag_id);
-
-        //check execution
-        $stmt->execute() ? true : false;
+        $stmt->execute();
     }
 
     //**Read All**

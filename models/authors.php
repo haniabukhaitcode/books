@@ -1,13 +1,13 @@
 <?php
-class Tag
+class Author
 {
     // database connection and table title
     private $conn;
-    private $table_name = "tags";
+    private $table_name = "authors";
 
     // object properties
     public $id;
-    public $tag;
+    public $author;
 
     public function __construct($db)
     {
@@ -19,11 +19,11 @@ class Tag
     {
         //select all data
         $query = "SELECT
-                    id, tag
+                    id, author
                 FROM
                     " . $this->table_name . "
                 ORDER BY
-                    tag";
+                    author";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -31,11 +31,11 @@ class Tag
         return $stmt;
     }
 
-    // Read tags by ID
+    // Read authors by ID
     function readName()
     {
 
-        $query = "SELECT tag FROM " . $this->table_name . " WHERE id = ? limit 0,1";
+        $query = "SELECT author FROM " . $this->table_name . " WHERE id = ? limit 0,1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
@@ -43,6 +43,6 @@ class Tag
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->tag = $row['tag'];
+        $this->author = $row['author'];
     }
 }
