@@ -63,7 +63,7 @@ if ($_POST) {
                 <div class="jumbotron">
                     <h4 class="mb-4">Add Books</h4>
 
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+                    <form action="" method="post">
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" name="title" class="form-control" aria-describedby="emailHelp" placeholder="Enter book name">
