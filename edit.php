@@ -3,13 +3,13 @@ $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
 include_once 'config/database.php';
 include_once 'models/books.php';
-include_once 'models/tags.php';
+include_once 'models/authors.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $book = new Book($db);
-$tag = new Tag($db);
+$author = new Author($db);
 
 $book->id = $id;
 $book->readOne();
@@ -17,7 +17,7 @@ $book->readOne();
 if ($_POST) {
     $book->title = $_POST['title'];
     $book->author = $_POST['author'];
-    $book->tag_id = $_POST['tag_id'];
+    $book->author_id = $_POST['author_id'];
     $book->update() ? true : false;
 }
 ?>
@@ -72,37 +72,38 @@ if ($_POST) {
                             <input type='text' name='title' value='<?php echo $book->title; ?>' class='form-control' /></label>
                         </div>
 
-                        <div>
-                            <label>Author</label>
-                            <input type='text' name='author' value='<?php echo $book->author; ?>' class='form-control' /></label>
-                        </div>
+
 
                         <div>
-                            <label>Tag</label>
+                            <label>Author</label>
 
                             <!-- categories select drop-down will be here -->
                             <div class="mb-3">
                                 <?php
-                                $stmt = $tag->read();
+                                $stmt = $author->read();
 
                                 // put them in a select drop-down
-                                echo "<select class='form-control' name='tag_id'>";
+                                echo "<select class='form-control' name='author_id'>";
                                 echo "<option>Please select...</option>";
 
-                                while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    extract($row_tag);
+                                while ($row_author = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_author);
 
                                     // current category of the book must be selected
-                                    if ($book->tag_id === $id) {
+                                    if ($book->author_id === $id) {
                                         echo "<option value='$id' selected>";
                                     } else {
                                         echo "<option value='$id'>";
                                     }
 
-                                    echo "$tag</option>";
+                                    echo "$author</option>";
                                 }
                                 echo "</select>";
                                 ?>
+                            </div>
+                            <div>
+                                <label>Tag</label>
+                                <input type='text' name='tag' value='<?php echo $book->tag; ?>' class='form-control' /></label>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                     </form>

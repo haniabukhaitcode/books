@@ -9,9 +9,8 @@ class Book
     // object properties
     public $id;
     public $title;
-    public $author;
-    public $tag_id;
-
+    public $author_id;
+    public $tag;
 
     public function __construct($db)
     {
@@ -22,22 +21,19 @@ class Book
     function create()
     {
         //sql
-        $query = "INSERT INTO " . $this->table_name . " (title,author,tag_id) VALUES(:title,:author,:tag_id) ";
-
+        $query = "INSERT INTO " . $this->table_name . "(title, author_id, tag) VALUES(:title, :author_id, :tag) ";
         //statement connection with prepare    
         $stmt = $this->conn->prepare($query);
-
         // **Controlling Values From User**
         // remving tags (htmlspecialchars)
         // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->author = htmlspecialchars(strip_tags($this->author));
-        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
-
+        $this->author_id = htmlspecialchars(strip_tags($this->author_id));
+        $this->tag = htmlspecialchars(strip_tags($this->tag));
         // bind values
         $stmt->bindParam(":title", $this->title);
-        $stmt->bindParam(":author", $this->author);
-        $stmt->bindParam(":tag_id", $this->tag_id);
+        $stmt->bindParam(":author_id", $this->author_id);
+        $stmt->bindParam(":tag", $this->tag);
         $stmt->execute();
     }
 
@@ -47,7 +43,7 @@ class Book
         $query = " SELECT * FROM 
             " . $this->table_name . "
            ORDER BY 
-           author ASC";
+           tag ASC";
 
 
         $stmt = $this->conn->prepare($query);
@@ -80,8 +76,8 @@ class Book
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->title = $row['title'];
-        $this->author = $row['author'];
-        $this->tag_id = $row['tag_id'];
+        $this->tag = $row['tag'];
+        $this->author_id = $row['author_id'];
     }
 
 
@@ -93,8 +89,8 @@ class Book
         " . $this->table_name . "
         SET
             title = :title,
-            author = :author,
-            tag_id = :tag_id
+            tag = :tag,
+            author_id = :author_id
     
         WHERE
             id = :id";
@@ -103,14 +99,14 @@ class Book
 
         //Control user Values
         $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->author = htmlspecialchars(strip_tags($this->author));
-        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+        $this->author_id = htmlspecialchars(strip_tags($this->author_id));
+        $this->tag = htmlspecialchars(strip_tags($this->tag));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         //bindParam()
         $stmt->bindParam(':title', $this->title);
-        $stmt->bindParam(':author', $this->author);
-        $stmt->bindParam(':tag_id', $this->tag_id);
+        $stmt->bindParam(':author_id', $this->author_id);
+        $stmt->bindParam(':tag', $this->tag);
         $stmt->bindParam(':id', $this->id);
 
         //ternery return 

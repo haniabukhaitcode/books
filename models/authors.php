@@ -1,4 +1,5 @@
 <?php
+
 class Author
 {
     // database connection and table title
@@ -32,10 +33,11 @@ class Author
     }
 
     // Read authors by ID
+
     function readName()
     {
 
-        $query = "SELECT author FROM " . $this->table_name . " WHERE id = ? limit 0,1";
+        $query = "SELECT author FROM " . $this->table_name . " WHERE id = ? limit 0,1   ";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);

@@ -3,14 +3,14 @@
 include_once 'config/recordLimit.php';
 include_once 'config/database.php';
 include_once 'models/books.php';
-include_once 'models/tags.php';
+include_once 'models/authors.php';
 
 
 $database = new Database();
 $db = $database->getConnection();
 
 $book = new Book($db);
-$tag = new Tag($db);
+$author = new Author($db);
 
 
 
@@ -70,7 +70,7 @@ $tag = new Tag($db);
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Auther</th>
+                                <th scope="col">Author</th>
                                 <th scope="col">Tag</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -80,21 +80,23 @@ $tag = new Tag($db);
                             <?php
 
                             $books = $book->readAll();
+
                             foreach ($books as $row) :  ?>
+
                                 <tr>
                                     <th scope="row"><?php echo $row['id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['author']; ?></td>
                                     <?php echo "<td>";
-                                        $tag->id = $row['tag_id'];
-                                        $tag->readName();
-                                        echo $tag->tag;
+                                        $author->id = $row['author_id'];
+                                        $author->readName();
+                                        echo $author->author;
                                         echo "</td>";
                                         ?>
+                                    <td><?php echo $row['tag']; ?></td>
+
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
                                     </td>
                                 </tr>
-
                             <?php endforeach; ?>
 
 

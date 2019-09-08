@@ -2,24 +2,23 @@
 
 include_once 'config/database.php';
 include_once 'models/books.php';
-include_once 'models/tags.php';
 include_once 'models/authors.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $book = new Book($db);
-$tag = new Tag($db);
-
+$author = new Author($db);
 
 
 
 if ($_POST) {
     $book->title = $_POST['title'];
-    $book->author = $_POST['author'];
-    $book->tag_id = $_POST['tag_id'];
+    $book->author_id = $_POST['author_id'];
+    $book->tag = $_POST['tag'];
     $book->create() ? true : false;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -68,39 +67,29 @@ if ($_POST) {
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" name="title" class="form-control" aria-describedby="emailHelp" placeholder="Enter book name">
+                            <input type="text" name="title" class="form-control" placeholder="Enter book name">
                         </div>
 
                         <div>
-                            <label>Auhor</label>
+                            <label>Author</label>
                             <div class="mb-3">
-                                <select multiple="multiple" class='form-control' name='author_id'>
-
+                                <select class='form-control' name='author_id'>
                                     <?php
+                                    // read the product categories from the database
                                     $stmt = $author->read();
-                                    while ($row_author = $stmt->fetch(PDO::FETCH_ASSOC))
+                                    // put them in a select drop-down
+                                    while ($row_author = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row_author);
-                                    echo "<option value='{$id}'>{$author}</option>";
-
+                                        echo "<option value='{$id}'>{$author}</option>";
+                                    }
                                     ?>
                                 </select>
                             </div>
                         </div>
 
-                        <div>
-                            <label>Tag</label>
-                            <div class="mb-3">
-                                <select multiple="multiple" class='form-control' name='tag_id'>
-
-                                    <?php
-                                    $stmt = $tag->read();
-                                    while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC))
-                                        extract($row_tag);
-                                    echo "<option value='{$id}'>{$tag}</option>";
-
-                                    ?>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="tag">Tag</label>
+                            <input type="text" name="tag" class="form-control" placeholder="Enter tag name">
                         </div>
 
                         <input type="submit" name="submit" class="btn btn-primary" />
