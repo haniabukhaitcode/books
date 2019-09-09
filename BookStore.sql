@@ -1,37 +1,38 @@
-DROP TABLE IF EXISTS `books`;
+DROP SCHEMA IF EXISTS BookStore;
+CREATE DATABASE BookStore;
 CREATE TABLE `books` (
-  `book_id` int(11) NOT NULL,
-  `title` varchar(256) NOT NULL,
-  `author_id` int(11),
+  `book_id` INT(11) NOT NULL,
+  `title` VARCHAR(256) NOT NULL,
+  `author_id` INT(11),
+  `tag_id` INT(11),
   PRIMARY KEY (`book_id`)
 );
 -- Dumping data for table `Books`
 INSERT INTO
-  `books` (`book_id`, `title`, `author_id`)
+  `books` (`book_id`, `title`, `author_id`, `tag_id`)
 VALUES
-  (1, 'Book1', 1),
-  (2, 'Book2', 1),
-  (3, 'Book3', 2),
-  (6, 'Book4', 2),
-  (7, 'Book5', 3),
-  (8, 'Book6', 3),
-  (9, 'Book7', 4),
-  (10, 'Book8', 4),
-  (11, 'Book9', 5),
-  (12, 'Book10', 5),
-  (13, 'Book11', 6),
-  (25, 'Book12', 6),
-  (26, 'Book13', 7),
-  (27, 'Book14', 7),
-  (28, 'Book15', 1),
-  (30, 'Book16', 2),
-  (31, 'Book17', 2),
-  (32, 'Book18', 3);
+  (1, 'Book1', 1, 1),
+  (2, 'Book2', 1, 1),
+  (3, 'Book3', 2, 2),
+  (6, 'Book4', 2, 2),
+  (7, 'Book5', 3, 3),
+  (8, 'Book6', 3, 3),
+  (9, 'Book7', 4, 4),
+  (10, 'Book8', 4, 4),
+  (11, 'Book9', 5, 6),
+  (12, 'Book10', 5, 5),
+  (13, 'Book11', 6, 6),
+  (25, 'Book12', 6, 6),
+  (26, 'Book13', 7, 7),
+  (27, 'Book14', 7, 7),
+  (28, 'Book15', 1, 1),
+  (30, 'Book16', 2, 2),
+  (31, 'Book17', 2, 2),
+  (32, 'Book18', 3, 3);
 -- Table structure for table `authors`
-  DROP TABLE IF EXISTS `authors`;
-CREATE TABLE `authors` (
+  CREATE TABLE `authors` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `author` varchar(256) NOT NULL,
+    `author` VARCHAR(256) NOT NULL,
     PRIMARY KEY (`id`)
   );
 -- Dumping data for table `authors`
@@ -46,8 +47,7 @@ VALUES
   (6, 'Author6'),
   (7, 'Author7');
 -- Table structure for table `tags`
-  DROP TABLE IF EXISTS `tags`;
-CREATE TABLE `tags` (
+  CREATE TABLE `tags` (
     `tag_id` INT(11) NOT NULL AUTO_INCREMENT,
     `tag` VARCHAR (256) NOT NULL,
     PRIMARY KEY (`tag_id`)
@@ -57,24 +57,15 @@ INSERT INTO
   `tags` (`tag_id`, `tag`)
 VALUES
   (1, 'Tag1'),
-  (2, 'Tag2'),
-  (3, 'Tag3'),
-  (4, 'Tag4'),
-  (5, 'Tag5'),
-  (6, 'Tag6'),
-  (7, 'Tag7');
-DROP TABLE IF EXISTS `books_tags`;
-CREATE TABLE `books_tags` (
-    `book_id` INT(11) NOT NULL,
-    `tag_id` INT(11) NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES books (book_id) ON DELETE CASCADE ON UPDATE RESTRICT,
-    FOREIGN KEY (tag_id) REFERENCES tags (tag_id) ON DELETE CASCADE ON UPDATE RESTRICT,
-    PRIMARY KEY(book_id, tag_id)
-  );
+  (2, 'Tag1'),
+  (3, 'Tag2'),
+  (4, 'Tag2'),
+  (5, 'Tag3'),
+  (6, 'Tag3'),
+  (7, 'Tag4');
 SELECT
-  books.book_id,
-  tags.tag_id
+  title,
+  tag
 FROM
   books
-  INNER JOIN books_tags ON books.book_id = books_tags.book_id
-  INNER JOIN tags ON tags.tag_id = books_tags.tag_id;
+  INNER JOIN tags ON books.tag_id = tags.tag_id;

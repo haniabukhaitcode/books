@@ -4,6 +4,7 @@ include_once 'config/recordLimit.php';
 include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
+include_once 'models/tags.php';
 
 
 $database = new Database();
@@ -11,6 +12,7 @@ $db = $database->getConnection();
 
 $book = new Book($db);
 $author = new Author($db);
+$tag = new Tag($db);
 
 
 
@@ -84,7 +86,7 @@ $author = new Author($db);
                             foreach ($books as $row) :  ?>
 
                                 <tr>
-                                    <th scope="row"><?php echo $row['id']; ?></th>
+                                    <th scope="row"><?php echo $row['book_id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
                                     <?php echo "<td>";
                                         $author->id = $row['author_id'];
@@ -92,9 +94,14 @@ $author = new Author($db);
                                         echo $author->author;
                                         echo "</td>";
                                         ?>
-                                    <td><?php echo $row['tag_id']; ?></td>
+                                    <?php echo "<td>";
+                                        $tag->id = $row['tag_id'];
+                                        $tag->readName();
+                                        echo $tag->tag;
+                                        echo "</td>";
+                                        ?>
 
-                                    <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
+                                    <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['book_id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['book_id'] ?>">Delete</a></td>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

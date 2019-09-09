@@ -4,20 +4,23 @@ $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
+include_once 'models/tags.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $book = new Book($db);
 $author = new Author($db);
+$tag = new Tag($db);
 
 $book->book_id = $book_id;
+
 $book->readOne();
 
 if ($_POST) {
     $book->title = $_POST['title'];
-    $book->author = $_POST['author'];
     $book->author_id = $_POST['author_id'];
+    $book->tag_id = $_POST['tag_id'];
     $book->update() ? true : false;
 }
 ?>
@@ -97,6 +100,29 @@ if ($_POST) {
                                     }
 
                                     echo "$author</option>";
+                                }
+                                echo "</select>";
+                                ?>
+                            </div>
+                            <div class="mb-3">
+                                <?php
+                                $stmt = $tag->read();
+
+                                // put them in a select drop-down
+                                echo "<select class='form-control' name='tag_id' multiple='multiple'>";
+                                echo "<option>Please select...</option>";
+
+                                while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_tag);
+
+                                    // current category of the book must be selected
+                                    if ($book->tag_id === $id) {
+                                        echo "<option value='$id' selected>";
+                                    } else {
+                                        echo "<option value='$id'>";
+                                    }
+
+                                    echo "$tag</option>";
                                 }
                                 echo "</select>";
                                 ?>

@@ -3,6 +3,7 @@
 include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
+include_once 'models/tags.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -70,7 +71,7 @@ if ($_POST) {
                             <input type="text" name="title" class="form-control" placeholder="Enter book name">
                         </div>
 
-                        <div>
+                        <div class="form-group">
                             <label>Author</label>
                             <div class="mb-3">
                                 <select class='form-control' name='author_id'>
@@ -86,10 +87,21 @@ if ($_POST) {
                                 </select>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label for="tag_id">Tag</label>
-                            <input type="text" name="tag_id" class="form-control" placeholder="Enter tag name">
+                            <label>Tag</label>
+                            <div class="mb-3">
+                                <select class='form-control' name='tag_id' multiple='multiple'>
+                                    <?php
+                                    // read the product categories from the database
+                                    $stmt = $tag->read();
+                                    // put them in a select drop-down
+                                    while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row_tag);
+                                        echo "<option value='{$id}'>{$tag}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
                         </div>
 
                         <input type="submit" name="submit" class="btn btn-primary" />

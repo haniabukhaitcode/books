@@ -77,8 +77,8 @@ class Book
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->title = $row['title'];
-        $this->tag_id = $row['tag_id'];
         $this->author_id = $row['author_id'];
+        $this->tag_id = $row['tag_id'];
     }
 
 
@@ -90,8 +90,8 @@ class Book
         " . $this->table_name . "
         SET
             title = :title,
-            tag_id = :tag_id,
             author_id = :author_id
+            tag_id = :tag_id,
     
         WHERE
             book_id = :book_id";
