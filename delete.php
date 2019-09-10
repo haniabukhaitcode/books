@@ -1,17 +1,13 @@
 <?php
-
 include_once 'config/database.php';
 include_once 'models/books.php';
-
 $database = new Database();
 $db = $database->getConnection();
-
 if (isset($_GET['del'])) {
     $id = $_GET['del'];
     $book = new Book($db);
     $book->delete($id);
 }
-
 ?>
 
 <!DOCTYPE html>

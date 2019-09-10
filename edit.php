@@ -1,22 +1,16 @@
 <?php
 $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
-
 include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
 include_once 'models/tags.php';
-
 $database = new Database();
 $db = $database->getConnection();
-
 $book = new Book($db);
 $author = new Author($db);
 $tag = new Tag($db);
-
 $book->book_id = $book_id;
-
 $book->readOne();
-
 if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];

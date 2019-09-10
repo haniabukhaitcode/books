@@ -1,26 +1,19 @@
 <?php
-
 include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
 include_once 'models/tags.php';
-
 $database = new Database();
 $db = $database->getConnection();
-
 $book = new Book($db);
 $author = new Author($db);
 $tag = new Tag($db);
-
-
-
 if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];
     $book->tag_id = $_POST['tag_id'];
     $book->create() ? true : false;
 }
-
 ?>
 
 <!DOCTYPE html>
