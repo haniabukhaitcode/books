@@ -68,7 +68,7 @@ if ($_POST) {
                 <div class="jumbotron">
                     <h4 class="mb-4">Edit Books</h4>
 
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$idG}"); ?>" method="post">
 
                         <div>
                             <label>Title</label>
@@ -87,16 +87,16 @@ if ($_POST) {
 
                                 // put them in a select drop-down
                                 echo "<select class='form-control' name='author_id'>";
-                                echo "<option>Please select...</option>";
+
 
                                 while ($row_author = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     extract($row_author);
 
                                     // current category of the book must be selected
-                                    if ($book->author_id === $id) {
-                                        echo "<option value='$id' selected>";
+                                    if ($book->author_id === $idG) {
+                                        echo "<option value='$idG' selected>";
                                     } else {
-                                        echo "<option value='$id'>";
+                                        echo "<option value='$idG'>";
                                     }
 
                                     echo "$author</option>";
@@ -116,20 +116,16 @@ if ($_POST) {
                                     extract($row_tag);
 
                                     // current category of the book must be selected
-                                    if ($book->tag_id === $id) {
-                                        echo "<option value='$id' selected>";
+                                    if ($book->tag_id === $idG) {
+                                        echo "<option value='$idG' selected>";
                                     } else {
-                                        echo "<option value='$id'>";
+                                        echo "<option value='$idG'>";
                                     }
 
                                     echo "$tag</option>";
                                 }
                                 echo "</select>";
                                 ?>
-                            </div>
-                            <div>
-                                <label>Tag</label>
-                                <input type='text' name='tag_id' value='<?php echo $book->tag_id; ?>' class='form-control' /></label>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                     </form>

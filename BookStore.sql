@@ -11,24 +11,24 @@ CREATE TABLE `books` (
 INSERT INTO
   `books` (`book_id`, `title`, `author_id`, `tag_id`)
 VALUES
-  (1, 'Book1', 1, 1),
-  (2, 'Book2', 1, 1),
-  (3, 'Book3', 2, 2),
-  (6, 'Book4', 2, 2),
-  (7, 'Book5', 3, 3),
-  (8, 'Book6', 3, 3),
-  (9, 'Book7', 4, 4),
-  (10, 'Book8', 4, 4),
-  (11, 'Book9', 5, 6),
-  (12, 'Book10', 5, 5),
-  (13, 'Book11', 6, 6),
-  (25, 'Book12', 6, 6),
-  (26, 'Book13', 7, 7),
-  (27, 'Book14', 7, 7),
-  (28, 'Book15', 1, 1),
-  (30, 'Book16', 2, 2),
-  (31, 'Book17', 2, 2),
-  (32, 'Book18', 3, 3);
+  (1, 'Title1', 1, 1),
+  (2, 'Title2', 1, 1),
+  (3, 'Title3', 2, 2),
+  (6, 'Title4', 2, 2),
+  (7, 'Title5', 3, 3),
+  (8, 'Title6', 3, 3),
+  (9, 'Title7', 4, 4),
+  (10, 'Title8', 4, 4),
+  (11, 'Title9', 5, 6),
+  (12, 'Title10', 5, 5),
+  (13, 'Title11', 6, 6),
+  (25, 'Title12', 6, 6),
+  (26, 'Title13', 7, 7),
+  (27, 'Title14', 7, 7),
+  (28, 'Title15', 1, 1),
+  (30, 'Title16', 2, 2),
+  (31, 'Title17', 2, 2),
+  (32, 'Title18', 3, 3);
 -- Table structure for table `authors`
   CREATE TABLE `authors` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,

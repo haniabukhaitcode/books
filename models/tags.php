@@ -8,7 +8,6 @@ class Tag
 
     // object properties
     public $id;
-    public $author;
     public $tag;
 
     public function __construct($db)
@@ -22,11 +21,11 @@ class Tag
         //select all data
 
         $query = "SELECT
-                    id, tag
-                FROM
-                    " . $this->table_name . "
-                ORDER BY
-                    tag";
+        title,
+        tag
+      FROM
+        books
+        INNER JOIN tags ON books.tag_id = tags.tag_id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

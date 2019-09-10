@@ -81,7 +81,7 @@ if ($_POST) {
                                     // put them in a select drop-down
                                     while ($row_author = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row_author);
-                                        echo "<option value='{$id}'>{$author}</option>";
+                                        echo "<option value='{$idG}'>{$author}</option>";
                                     }
                                     ?>
                                 </select>
@@ -97,7 +97,7 @@ if ($_POST) {
                                     // put them in a select drop-down
                                     while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row_tag);
-                                        echo "<option value='{$id}'>{$tag}</option>";
+                                        echo "<option value='{$idG}'>{$tag}</option>";
                                     }
                                     ?>
                                 </select>
