@@ -16,23 +16,13 @@ class Tag
     {
         //select all data
         $query = "SELECT
-        title,
-        tag
+        tag_id,tag
       FROM
-        books
-        INNER JOIN tags ON books.tag_id = tags.tag_id";
+        tags";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt;
-    }
-    // Read authors by ID
-    function readName()
-    {
-        $query = "SELECT tag FROM " . $this->table_name . " WHERE id = ? limit 0,1   ";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->author = $row['tag'];
+        $result = $stmt->fetchAll();
+
+        return $result;
     }
 }

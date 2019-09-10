@@ -9,6 +9,7 @@ class Book
     public $title;
     public $author_id;
     public $tag_id;
+    public $tagIds;
     public function __construct($db)
     {
         $this->conn = $db;
@@ -17,28 +18,64 @@ class Book
     function create()
     {
         //sql
-        $query = "INSERT INTO " . $this->table_name . "(title, author_id, tag_id) VALUES(:title, :author_id, :tag_id) ";
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $lastId = "select max(book_id) book_id from " . $this->table_name . "";
+        $bookQuery = "INSERT INTO " . $this->table_name . "(title, author_id) VALUES(:title, :author_id) ";
+        $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:inserted_id, :tag_id) ";
         //statement connection with prepare    
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->conn->prepare($bookQuery);
         // **Controlling Values From User**
         // remving tags (htmlspecialchars)
         // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
-        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+
+
+
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
-        $stmt->bindParam(":tag_id", $this->tag_id);
-        $stmt->execute() ? header("Location: index.php") : false;
+
+        $stmt->execute();
+        $sth = $this->conn->query($lastId);
+
+        $insertedId = $sth->fetchAll();
+        $bookId =  $insertedId[0]["book_id"];
+
+        foreach ($this->tag_id as $tag) {
+
+            $tagStmnt = $this->conn->prepare($tagQuery);
+            $tagStmnt->bindParam(":tag_id", $tag);
+            $tagStmnt->bindParam(":inserted_id", $bookId);
+            $tagStmnt->execute();
+        }
+
+        header("Location: index.php");
     }
     //**Read All**
     function readAll()
     {
-        $query = " SELECT * FROM 
-            " . $this->table_name . "
-           ORDER BY 
-           tag_id ASC";
+        $query = "SELECT
+        books.book_id,
+        books.title,
+        authors.author,
+        GROUP_CONCAT(tags.tag SEPARATOR ',') tags
+    FROM
+        books
+    JOIN
+        authors
+    ON
+        authors.id = books.author_id
+    JOIN
+        books_tags
+    ON
+        books_tags.book_id = books.book_id
+    JOIN
+        tags
+    ON
+        tags.tag_id = books_tags.tag_id
+    GROUP BY
+        books.book_id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -52,46 +89,89 @@ class Book
         return $totalRows;
     }
     //**Read One ID**
-    function readOne()
+    function readOne($id)
     {
-        $query = "SELECT *
-        FROM " . $this->table_name . "
-        WHERE book_id = ?
-        LIMIT 0,1";
+        $query = "SELECT
+        books.book_id,
+        books.title,
+        authors.id author,
+        GROUP_CONCAT(tags.tag_id SEPARATOR ',') tags
+    FROM
+        books
+    JOIN
+        authors
+    ON
+        authors.id = books.author_id
+    JOIN
+        books_tags
+    ON
+        books_tags.book_id = books.book_id
+    JOIN
+        tags
+    ON
+        tags.tag_id = books_tags.tag_id
+    WHERE books.book_id = ?
+    GROUP BY
+        books.book_id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->book_id);
+        $stmt->bindParam(1, $id);
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->title = $row['title'];
-        $this->author_id = $row['author_id'];
-        $this->tag_id = $row['tag_id'];
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+
+        $this->title = $row->title;
+        $this->author_id = $row->author;
+        $this->tagIds =  explode(",", $row->tags);
+        // $this->tag_id = $row['tag_id'];
     }
     //**Update**
-    function update()
+    function update($id)
     {
-        $query = "UPDATE
+        //sql
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $deleteTags = "delete from books_tags where book_id = " . $id . "";
+        $bookQuery = "UPDATE
         " . $this->table_name . "
         SET
             title = :title,
             author_id = :author_id
-            tag_id = :tag_id,
     
         WHERE
             book_id = :book_id";
-        $stmt = $this->conn->prepare($query);
-        //Control user Values
+        $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:book_id, :tag_id) ";
+        //statement connection with prepare    
+        $stmt = $this->conn->prepare($bookQuery);
+        $delStmt = $this->conn->prepare($deleteTags);
+        // **Controlling Values From User**
+        // remving tags (htmlspecialchars)
+        // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
-        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
-        $this->book_id = htmlspecialchars(strip_tags($this->book_id));
-        //bindParam()
-        $stmt->bindParam(':title', $this->title);
-        $stmt->bindParam(':author_id', $this->author_id);
-        $stmt->bindParam(':tag_id', $this->tag_id);
-        $stmt->bindParam(':book_id', $this->book_id);
-        //ternery return 
-        $stmtExec = $stmt->execute();
-        $stmtExec ? header("Location: index.php") : print("Error in books.php update function");
+
+
+
+        // bind values
+        $stmt->bindParam(":title", $this->title);
+        $stmt->bindParam(":author_id", $this->author_id);
+        $stmt->bindParam(":book_id", $id);
+
+        $stmt->execute();
+        $id = (int) $id;
+
+
+
+
+        $delStmt->execute();
+
+
+        foreach ($this->tag_id as $tag) {
+
+            $tagStmnt = $this->conn->prepare($tagQuery);
+            $tagStmnt->bindParam(":tag_id", $tag);
+            $tagStmnt->bindParam(":book_id", $id);
+            $tagStmnt->execute();
+        }
+
+        header("Location: index.php");
     }
     //**Delete**
     public function delete($book_id)

@@ -71,12 +71,13 @@ if ($_POST) {
                                 <select class='form-control' name='author_id'>
                                     <?php
                                     // read the product categories from the database
-                                    $stmt = $author->read();
+                                    $result = $author->read();
                                     // put them in a select drop-down
-                                    while ($row_author = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        extract($row_author);
-                                        echo "<option value='{$idG}'>{$author}</option>";
+
+                                    foreach ($result as $row) {
+                                        echo "<option value='{$row['id']}'>{$row['author']}</option>";
                                     }
+
                                     ?>
                                 </select>
                             </div>
@@ -84,15 +85,16 @@ if ($_POST) {
                         <div class="form-group">
                             <label>Tag</label>
                             <div class="mb-3">
-                                <select class='form-control' name='tag_id' multiple='multiple'>
+                                <select class='form-control' name='tag_id[]' multiple='multiple'>
                                     <?php
                                     // read the product categories from the database
-                                    $stmt = $tag->read();
+                                    $result = $tag->read();
                                     // put them in a select drop-down
-                                    while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        extract($row_tag);
-                                        echo "<option value='{$idG}'>{$tag}</option>";
+
+                                    foreach ($result as $row) {
+                                        echo "<option value='{$row['tag_id']}'>{$row['tag']}</option>";
                                     }
+
                                     ?>
                                 </select>
                             </div>

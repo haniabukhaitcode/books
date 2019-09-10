@@ -1,14 +1,22 @@
 <?php
+
 include_once 'config/recordLimit.php';
 include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
 include_once 'models/tags.php';
+
+
 $database = new Database();
 $db = $database->getConnection();
+
 $book = new Book($db);
 $author = new Author($db);
 $tag = new Tag($db);
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -72,22 +80,20 @@ $tag = new Tag($db);
 
                         <tbody>
                             <?php
+
                             $books = $book->readAll();
+
                             foreach ($books as $row) :  ?>
 
                                 <tr>
                                     <th scope="row"><?php echo $row['book_id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
                                     <?php echo "<td>";
-                                        $author->id = $row['author_id'];
-                                        $author->readName();
-                                        echo $author->author;
+                                        echo $row['author'];
                                         echo "</td>";
                                         ?>
                                     <?php echo "<td>";
-                                        $tag->id = $row['tag_id'];
-                                        $tag->readName();
-                                        echo $tag->tag;
+                                        echo $row['tags'];
                                         echo "</td>";
                                         ?>
 
