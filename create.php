@@ -10,6 +10,7 @@ $db = $database->getConnection();
 
 $book = new Book($db);
 $author = new Author($db);
+$tag = new Tag($db);
 
 
 

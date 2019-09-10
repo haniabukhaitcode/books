@@ -73,36 +73,36 @@ if ($_POST) {
                             <label>Title</label>
                             <input type='text' name='title' value='<?php echo $book->title; ?>' class='form-control' /></label>
                         </div>
-
-                        <label>Author</label>
-                        <select class=' form-control' name='author_id'>
-                            <?php
-                            // read the product categories from the database
-                            $stmt = $author->read();
-                            // put them in a select drop-down
-                            while ($author_id = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                extract($author_id);
-                                echo "<option value='{$idG}'>{$author}</option>";
-                            }
-                            ?>
-                        </select>
-
-                        <label>Tag</label>
-                        <select class=' form-control' name='tag_id' multiple='multiple'>
-                            <?php
-                            // read the product categories from the database
-                            $stmt = $tag->read();
-                            // put them in a select drop-down
-                            while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                extract($row_tag);
-                                echo "<option value='{$idG}'>{$tag}</option>";
-                            }
-                            ?>
-                        </select>
-
-
+                        <div class="mt-3">
+                            <label>Author</label>
+                            <select class=' form-control' name='author_id'>
+                                <?php
+                                // read the product categories from the database
+                                $stmt = $author->read();
+                                // put them in a select drop-down
+                                while ($author_id = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($author_id);
+                                    echo "<option value='{$idG}'>{$author}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <label>Tag</label>
+                            <select class=' form-control' name='tag_id' multiple='multiple'>
+                                <?php
+                                $stmt = $tag->read();
+                                while ($row_tag = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_tag);
+                                    echo "<option value='{$idG}'>{$tag}</option>";
+                                }
+                                ?>
+                            </select>
+                            <div>
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
                     </form>
-                    <button type="submit" class="btn btn-primary">Update</button>
 
                 </div>
             </div>
