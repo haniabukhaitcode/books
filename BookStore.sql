@@ -15,16 +15,15 @@ SET
   /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
   /*!40101 SET NAMES utf8mb4 */;
 --
-
-DROP DATABASE IF EXISTS `BookStore`;
-CREATE DATABASE `BookStore`;
   -- Database: `BookStore`
   --
   -- --------------------------------------------------------
   --
   -- Table structure for table `authors`
   --
-  CREATE TABLE `authors` (
+  DROP DATABASE IF EXISTS `BookStore`;
+CREATE DATABASE `BookStore`;
+CREATE TABLE `authors` (
     `id` int(11) NOT NULL,
     `author` varchar(256) NOT NULL
   ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -42,42 +41,21 @@ VALUES
   (6, 'Author6'),
   (7, 'Author7');
 -- --------------------------------------------------------
- -- Table structure for table `images`
-  --
-  CREATE TABLE `images` (
-    `id` int(11) NOT NULL,
-    image varchar(256) NOT NULL
-  ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
---
-  -- Dumping data for table `images`
-  --
-INSERT INTO
-  `images` (`id`, image)
-VALUES
-  (1, 'Image1'),
-  (2, 'Image2'),
-  (3, 'Image3'),
-  (4, 'Image4'),
-  (5, 'Image5'),
-  (6, 'Image6'),
-  (7, 'Image7');
--- --------------------------------------------------------
   --
   -- Table structure for table `books`
   --
   CREATE TABLE `books` (
     `book_id` int(11) NOT NULL,
     `title` varchar(256) NOT NULL,
-    `author_id` int(11) DEFAULT NULL,
-    `image_id` int(11) DEFAULT NULL
+    `author_id` int(11) DEFAULT NULL
   ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 --
   -- Dumping data for table `books`
   --
 INSERT INTO
-  `books` (`book_id`, `title`, `author_id`,`image_id`)
+  `books` (`book_id`, `title`, `author_id`)
 VALUES
-  (2, '5ara', 5, 5);
+  (2, '5ara', 5);
 -- --------------------------------------------------------
   --
   -- Table structure for table `books_tags`
@@ -130,13 +108,6 @@ ALTER TABLE
 ADD
   PRIMARY KEY (`id`);
 --
--- Indexes for table `images`
-  --
-ALTER TABLE
-  `images`
-ADD
-  PRIMARY KEY (`id`);
---
   -- Indexes for table `books`
   --
 ALTER TABLE
@@ -170,16 +141,6 @@ ALTER TABLE
 MODIFY
   `id` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 8;
-
---
-  -- AUTO_INCREMENT for table `images`
-  --
-ALTER TABLE
-  `images`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 8;
-
 --
   -- AUTO_INCREMENT for table `books`
   --

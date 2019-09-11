@@ -3,19 +3,16 @@ include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
 include_once 'models/tags.php';
-include_once 'models/images.php';
 $database = new Database();
 $db = $database->getConnection();
 $book = new Book($db);
 $author = new Author($db);
 $tag = new Tag($db);
-$image = new Image($db);
 
 if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];
     $book->tag_id = $_POST['tag_id'];
-    $book->image_id = $_POST['image_id'];
     $book->create() ? true : false;
 }
 ?>
@@ -103,23 +100,7 @@ if ($_POST) {
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Image</label>
-                            <div class="mb-3">
-                                <select class='form-control' name='image_id'>
-                                    <?php
-                                    // read the product categories from the database
-                                    $result = $image->read();
-                                    // put them in a select drop-down
 
-                                    foreach ($result as $row) {
-                                        echo "<option value='{$row['id']}'>{$row['image']}</option>";
-                                    }
-
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
                         <input type="submit" name="submit" class="btn btn-primary" />
                     </form>
 
