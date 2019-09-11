@@ -10,17 +10,20 @@ class Book
     public $author_id;
     public $tag_id;
     public $tagIds;
+    public $image_id;
     public function __construct($db)
     {
         $this->conn = $db;
     }
     //**Create**
+
     function create()
     {
+
         //sql
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $lastId = "select max(book_id) book_id from " . $this->table_name . "";
-        $bookQuery = "INSERT INTO " . $this->table_name . "(title, author_id) VALUES(:title, :author_id) ";
+        $bookQuery = "INSERT INTO " . $this->table_name . "(title, author_id, image_id) VALUES(:title, :author_id, :image_id) ";
         $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:inserted_id, :tag_id) ";
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);
@@ -29,12 +32,14 @@ class Book
         // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
+        $this->image_id = htmlspecialchars(strip_tags($this->image_id));
 
 
 
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
+        $stmt->bindParam(":image_id", $this->image_id);
 
         $stmt->execute();
         $sth = $this->conn->query($lastId);
@@ -55,10 +60,13 @@ class Book
     //**Read All**
     function readAll()
     {
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
         $query = "SELECT
         books.book_id,
         books.title,
         authors.author,
+      images.image,
         GROUP_CONCAT(tags.tag SEPARATOR ',') tags
     FROM
         books
@@ -74,11 +82,17 @@ class Book
         tags
     ON
         tags.tag_id = books_tags.tag_id
+    JOIN
+        images
+    ON
+        images.id = books.image_id
+
     GROUP BY
         books.book_id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
+        print_r($stmt->errorInfo());
     }
     //**Count All Paging Books**
     public function countAll()
@@ -117,7 +131,6 @@ class Book
         $stmt->bindParam(1, $id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);
-
         $this->title = $row->title;
         $this->author_id = $row->author;
         $this->tagIds =  explode(",", $row->tags);
@@ -133,7 +146,8 @@ class Book
         " . $this->table_name . "
         SET
             title = :title,
-            author_id = :author_id
+            author_id = :author_id,
+            image_id = :image_id
     
         WHERE
             book_id = :book_id";
@@ -146,12 +160,14 @@ class Book
         // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
+        $this->image_id = htmlspecialchars(strip_tags($this->image_id));
 
 
 
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
+        $stmt->bindParam(":image_id", $this->image_id);
         $stmt->bindParam(":book_id", $id);
 
         $stmt->execute();

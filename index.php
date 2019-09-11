@@ -5,6 +5,7 @@ include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
 include_once 'models/tags.php';
+include_once 'models/images.php';
 
 
 $database = new Database();
@@ -13,9 +14,7 @@ $db = $database->getConnection();
 $book = new Book($db);
 $author = new Author($db);
 $tag = new Tag($db);
-
-
-
+$image = new Image($db);
 
 ?>
 
@@ -74,7 +73,9 @@ $tag = new Tag($db);
                                 <th scope="col">Title</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Tag</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Action</th>
+
                             </tr>
                         </thead>
 
@@ -94,6 +95,11 @@ $tag = new Tag($db);
                                         ?>
                                     <?php echo "<td>";
                                         echo $row['tags'];
+                                        echo "</td>";
+                                        ?>
+
+                                    <?php echo "<td>";
+                                        echo $row['image'];
                                         echo "</td>";
                                         ?>
 
