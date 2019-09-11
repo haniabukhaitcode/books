@@ -4,16 +4,19 @@ include_once 'config/database.php';
 include_once 'models/books.php';
 include_once 'models/authors.php';
 include_once 'models/tags.php';
+include_once 'models/images.php';
 $database = new Database();
 $db = $database->getConnection();
 $book = new Book($db);
 $author = new Author($db);
 $tag = new Tag($db);
+$image = new Image($db);
 $book->readOne($id);
 if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];
     $book->tag_id = $_POST['tag_id'];
+    $book->image_id = $_POST['image_id'];
     $book->update($id) ? true : false;
 }
 ?>
@@ -104,6 +107,25 @@ if ($_POST) {
                                 ?>
                             </select>
                             <div>
+                                <div class="mt-3">
+                                    <label>Image</label>
+                                    <select class=' form-control' name='image_id'>
+                                        <?php
+                                        // read the product categories from the database
+                                        $result = $image->read();
+                                        // put them in a select drop-down
+
+                                        foreach ($result as $row) {
+                                            if ($book->image_id == $row['id'])
+                                                echo "<option selected value='{$row['id']}'>{$row['image']}</option>";
+                                            else
+                                                echo "<option value='{$row['id']}'>{$row['image']}</option>";
+                                        }
+
+                                        ?>
+
+                                    </select>
+                                </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
