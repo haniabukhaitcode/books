@@ -1,6 +1,6 @@
 <?php
-include_once 'config/database.php';
-include_once 'models/books.php';
+include_once '../config/database.php';
+include_once '../models/books.php';
 $database = new Database();
 $db = $database->getConnection();
 if (isset($_GET['del'])) {

@@ -39,6 +39,7 @@ class Book
         $stmt->bindParam(":author_id", $this->author_id);
         $stmt->bindParam(":book_image", $imageName);
 
+
         $stmt->execute();
         $sth = $this->conn->query($lastId);
 

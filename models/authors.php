@@ -25,4 +25,55 @@ class Author
 
         return $result;
     }
+
+    function readOne($id)
+    {
+        $query = "SELECT id, author FROM authors WHERE id=?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        $this->author = $row->author;
+    }
+
+
+    function update($id)
+
+    {
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $bookQuery = "UPDATE
+        " . $this->table_name . "
+        SET
+            author = :author
+    
+        WHERE
+            
+        id = :id";
+        //statement connection with prepare    
+        $stmt = $this->conn->prepare($bookQuery);
+        // **Controlling Values From User**
+        // remving tags (htmlspecialchars)
+        // allowing variables only (strip_tags)
+        $this->author = htmlspecialchars(strip_tags($this->author));
+
+
+
+        // bind values
+        $stmt->bindParam(":author", $this->author);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        header("Location: index.php");
+    }
+
+    public function delete($id)
+    {
+        $query = "DELETE FROM authors WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+        if ($stmt) {
+            header("Location: index.php");
+        }
+    }
 }

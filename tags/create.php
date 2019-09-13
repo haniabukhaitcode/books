@@ -1,8 +1,8 @@
 <?php
-include_once 'config/database.php';
-include_once 'models/books.php';
-include_once 'models/authors.php';
-include_once 'models/tags.php';
+include_once '../config/database.php';
+include_once '../models/books.php';
+include_once '../models/authors.php';
+include_once '../models/tags.php';
 $database = new Database();
 $db = $database->getConnection();
 $book = new Book($db);

@@ -3,7 +3,6 @@ class Tag
 {
     // database connection and table title
     private $conn;
-    private $table_name = "tags";
     // object properties
     public $id;
     public $tag;
