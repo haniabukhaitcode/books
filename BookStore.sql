@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 10, 2019 at 07:22 PM
+-- Generation Time: Sep 13, 2019 at 05:28 PM
 -- Server version: 5.7.27-0ubuntu0.19.04.1
 -- PHP Version: 7.2.19-0ubuntu0.19.04.2
 SET
@@ -21,9 +21,7 @@ SET
   --
   -- Table structure for table `authors`
   --
-  DROP DATABASE IF EXISTS `BookStore`;
-CREATE DATABASE `BookStore`;
-CREATE TABLE `authors` (
+  CREATE TABLE `authors` (
     `id` int(11) NOT NULL,
     `author` varchar(256) NOT NULL
   ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -47,15 +45,16 @@ VALUES
   CREATE TABLE `books` (
     `book_id` int(11) NOT NULL,
     `title` varchar(256) NOT NULL,
-    `author_id` int(11) DEFAULT NULL
+    `author_id` int(11) DEFAULT NULL,
+    `book_image` varchar(255) NOT NULL
   ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 --
   -- Dumping data for table `books`
   --
 INSERT INTO
-  `books` (`book_id`, `title`, `author_id`)
+  `books` (`book_id`, `title`, `author_id`, `book_image`)
 VALUES
-  (2, '5ara', 5);
+  (2, '5ara', 5, 'images.png');
 -- --------------------------------------------------------
   --
   -- Table structure for table `books_tags`

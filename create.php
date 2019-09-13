@@ -13,6 +13,7 @@ if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];
     $book->tag_id = $_POST['tag_id'];
+    $book->book_image = $_FILES['book_image'];
     $book->create() ? true : false;
 }
 ?>
@@ -60,7 +61,7 @@ if ($_POST) {
                 <div class="jumbotron">
                     <h4 class="mb-4">Add Books</h4>
 
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" name="title" class="form-control" placeholder="Enter book name">
@@ -98,6 +99,12 @@ if ($_POST) {
 
                                     ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <div class="mb-3">
+                                <input type="file" name="book_image" id="book_image">
                             </div>
                         </div>
 

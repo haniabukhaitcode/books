@@ -16,6 +16,9 @@ $tag = new Tag($db);
 
 ?>
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,6 +98,10 @@ $tag = new Tag($db);
                                         echo "</td>";
                                         ?>
 
+                                    <?php echo "<td>";
+                                        echo '<img src="images/' . $row["book_image"] . '" alt="no_image"> </img>';
+                                        echo "</td>";
+                                        ?>
 
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['book_id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['book_id'] ?>">Delete</a></td>
                                     </td>

@@ -14,6 +14,7 @@ if ($_POST) {
     $book->title = $_POST['title'];
     $book->author_id = $_POST['author_id'];
     $book->tag_id = $_POST['tag_id'];
+    $book->book_image = $_FILES['book_image'];
     $book->update($id) ? true : false;
 }
 ?>
@@ -61,7 +62,7 @@ if ($_POST) {
                 <div class="jumbotron">
                     <h4 class="mb-4">Edit Books</h4>
 
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
                         <div>
                             <label>Title</label>
                             <input type='text' name='title' value='<?php echo $book->title; ?>' class='form-control' /></label>
@@ -92,7 +93,7 @@ if ($_POST) {
                                 // read the product categories from the database
                                 $result = $tag->read();
                                 // put them in a select drop-down
-                                var_dump($book->tagIds);
+
                                 foreach ($result as $row) {
 
                                     if (in_array($row['tag_id'], $book->tagIds))
@@ -104,6 +105,17 @@ if ($_POST) {
                                 ?>
                             </select>
                             <div>
+                                <div class="mt-3">
+                                    <label>Image</label>
+                                    <input type="file" name="book_image" id="book_image">
+                                    <?php
+                                    if (!empty($book->book_image)) {
+                                        echo "<td>";
+                                        echo '<img src="images/' . $book->book_image . '" alt="no_image"> </img>';
+                                        echo "</td>";
+                                    }
+                                    ?>
+                                </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>

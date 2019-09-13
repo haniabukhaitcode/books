@@ -10,6 +10,7 @@ class Book
     public $author_id;
     public $tag_id;
     public $tagIds;
+    public $book_image;
     public function __construct($db)
     {
         $this->conn = $db;
@@ -22,21 +23,21 @@ class Book
         //sql
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $lastId = "select max(book_id) book_id from " . $this->table_name . "";
-        $bookQuery = "INSERT INTO " . $this->table_name . "(title, author_id) VALUES(:title, :author_id) ";
+        $bookQuery = "INSERT INTO " . $this->table_name . "(title, author_id, book_image) VALUES(:title, :author_id, :book_image) ";
         $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:inserted_id, :tag_id) ";
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);
+        $imageName = $this->uploadPhoto()["name"];
         // **Controlling Values From User**
         // remving tags (htmlspecialchars)
         // allowing variables only (strip_tags)
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
 
-
-
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
+        $stmt->bindParam(":book_image", $imageName);
 
         $stmt->execute();
         $sth = $this->conn->query($lastId);
@@ -62,19 +63,20 @@ class Book
         $query = "SELECT
         books.book_id,
         books.title,
+        books.book_image,
         authors.author,
         GROUP_CONCAT(tags.tag SEPARATOR ',') tags
     FROM
         books
-    JOIN
+  Left  JOIN
         authors
     ON
         authors.id = books.author_id
-    JOIN
+  Left  JOIN
         books_tags
     ON
         books_tags.book_id = books.book_id
-    JOIN
+   Left JOIN
         tags
     ON
         tags.tag_id = books_tags.tag_id
@@ -100,6 +102,7 @@ class Book
         $query = "SELECT
         books.book_id,
         books.title,
+        books.book_image,
         authors.id author,
         GROUP_CONCAT(tags.tag_id SEPARATOR ',') tags
     FROM
@@ -125,8 +128,8 @@ class Book
         $row = $stmt->fetch(PDO::FETCH_OBJ);
         $this->title = $row->title;
         $this->author_id = $row->author;
+        $this->book_image = $row->book_image;
         $this->tagIds =  explode(",", $row->tags);
-        // $this->tag_id = $row['tag_id'];
     }
     //**Update**
     function update($id)
@@ -138,7 +141,8 @@ class Book
         " . $this->table_name . "
         SET
             title = :title,
-            author_id = :author_id
+            author_id = :author_id,
+            book_image = :book_image
     
         WHERE
             book_id = :book_id";
@@ -149,6 +153,7 @@ class Book
         // **Controlling Values From User**
         // remving tags (htmlspecialchars)
         // allowing variables only (strip_tags)
+        $imageName = $this->uploadPhoto()["name"];
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
 
@@ -157,6 +162,7 @@ class Book
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
+        $stmt->bindParam(":book_image", $imageName);
         $stmt->bindParam(":book_id", $id);
 
         $stmt->execute();
@@ -188,5 +194,57 @@ class Book
         if ($stmt) {
             header("Location: index.php");
         }
+    }
+    function uploadPhoto()
+    {
+
+        $result_message = "";
+
+        // now, if image is not empty, try to upload the image
+        if ($this->book_image) {
+
+            // sha1_file() function is used to make a unique file name
+            $target_directory = $_SERVER['DOCUMENT_ROOT'] . "/books/images/";
+            $target_file = $target_directory  . $this->book_image["name"];
+            $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+
+            // error message is empty
+            $file_upload_error_messages = "";
+            // make sure that file is a real image
+            $check = getimagesize($this->book_image["tmp_name"]);
+            if ($check !== false) {
+                // submitted file is an image
+            } else {
+                $file_upload_error_messages .= "<div>Submitted file is not an image.</div>";
+            }
+
+            // make sure certain file types are allowed
+            $allowed_file_types = array("jpg", "jpeg", "png", "gif");
+            if (!in_array($file_type, $allowed_file_types)) {
+                $file_upload_error_messages .= "<div>Only JPG, JPEG, PNG, GIF files are allowed.</div>";
+            }
+
+            // make sure file does not exist
+            if (file_exists($target_file)) {
+                $file_upload_error_messages .= "<div>Image already exists. Try to change file name.</div>";
+            }
+
+            // make sure submitted file is not too large, can't be larger than 1 MB
+            if ($this->book_image['size'] > (1024000)) {
+                $file_upload_error_messages .= "<div>Image must be less than 1 MB in size.</div>";
+            }
+
+            // make sure the 'uploads' folder exists
+            // if not, create it
+            if (!is_dir($target_directory)) {
+                mkdir($target_directory, 0777, true);
+            }
+            move_uploaded_file($this->book_image["tmp_name"], $target_file);
+        }
+
+        return array(
+            "err" => $file_upload_error_messages,
+            "name" => $this->book_image["name"]
+        );
     }
 }

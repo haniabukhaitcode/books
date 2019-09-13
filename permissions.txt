@@ -9,3 +9,4 @@ sudo nano /etc/php/7.2/apache2/php.ini
 
 sudo service apache2 restart
 
+sudo chmod -R 777 /var/www/html/books/images/
