@@ -27,15 +27,7 @@ if ($_POST) {
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php">Authors</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-
-    </nav>
+    <?php include('../navbar.html'); ?>
 
 
     <!-- Table -->
@@ -47,8 +39,7 @@ if ($_POST) {
 
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
                         <div>
-                            <label>Author</label>
-                            <input type='text' name='author' value='<?php echo $author->author; ?>' class='form-control' /></label>
+                            <input type='text' name='author' value='<?php echo $author->author; ?>' class='form-control' />
                         </div>
 
                         <div class="mt-3">

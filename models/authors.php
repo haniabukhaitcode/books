@@ -28,7 +28,7 @@ class Author
 
     function readOne($id)
     {
-        $query = "SELECT id, author FROM authors WHERE id=?";
+        $query = "SELECT id, author FROM authors WHERE id = ?";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
@@ -75,5 +75,21 @@ class Author
         if ($stmt) {
             header("Location: index.php");
         }
+    }
+    function create()
+    {
+
+        //sql
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $bookQuery = "INSERT INTO " . $this->table_name . "(author) VALUES(:author) ";
+        $stmt = $this->conn->prepare($bookQuery);
+        $this->author = htmlspecialchars(strip_tags($this->author));
+
+        // bind values
+        $stmt->bindParam(":author", $this->author);
+        $stmt->execute();
+        print_r($stmt->errorInfo());
+
+        // header("Location: index.php");
     }
 }
