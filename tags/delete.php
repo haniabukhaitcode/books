@@ -1,12 +1,13 @@
 <?php
 include_once '../config/database.php';
-include_once '../models/books.php';
+include_once '../models/tags.php';
+
 $database = new Database();
 $db = $database->getConnection();
 if (isset($_GET['del'])) {
     $id = $_GET['del'];
-    $book = new Book($db);
-    $book->delete($id);
+    $tag = new Tag($db);
+    $tag->delete($id);
 }
 ?>
 

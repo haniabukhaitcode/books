@@ -80,7 +80,7 @@ class Book
    Left JOIN
         tags
     ON
-        tags.tag_id = books_tags.tag_id
+        tags.id = books_tags.tag_id
 
     GROUP BY
         books.book_id";
@@ -105,7 +105,7 @@ class Book
         books.title,
         books.book_image,
         authors.id author,
-        GROUP_CONCAT(tags.tag_id SEPARATOR ',') tags
+        GROUP_CONCAT(tags.id SEPARATOR ',') tags
     FROM
         books
     JOIN
@@ -119,7 +119,7 @@ class Book
     JOIN
         tags
     ON
-        tags.tag_id = books_tags.tag_id
+        tags.id = books_tags.tag_id
     WHERE books.book_id = ?
     GROUP BY
         books.book_id";
