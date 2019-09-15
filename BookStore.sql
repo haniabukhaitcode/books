@@ -82,14 +82,14 @@ VALUES
   -- Table structure for table `tags`
   --
   CREATE TABLE `tags` (
-    `tag_id` int(11) NOT NULL,
+    `id` int(11) NOT NULL,
     `tag` varchar(256) NOT NULL
   ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 --
   -- Dumping data for table `tags`
   --
 INSERT INTO
-  `tags` (`tag_id`, `tag`)
+  `tags` (`id`, `tag`)
 VALUES
   (1, 'Tag1'),
   (2, 'Tag1'),
@@ -130,7 +130,7 @@ ADD
 ALTER TABLE
   `tags`
 ADD
-  PRIMARY KEY (`tag_id`);
+  PRIMARY KEY (`id`);
 --
   -- AUTO_INCREMENT for dumped tables
   --
@@ -156,7 +156,7 @@ MODIFY
 ALTER TABLE
   `tags`
 MODIFY
-  `tag_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 8;
 --
   -- Constraints for dumped tables
@@ -167,7 +167,7 @@ MODIFY
 ALTER TABLE
   `books_tags`
 ADD
-  CONSTRAINT `books_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  CONSTRAINT `books_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
   /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
   /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
   /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

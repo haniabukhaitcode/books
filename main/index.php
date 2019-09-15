@@ -70,20 +70,11 @@ $tag = new Tag($db);
                                 <tr>
                                     <th scope="row"><?php echo $row['book_id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
-                                    <?php echo "<td>";
-                                        echo $row['author'];
-                                        echo "</td>";
-                                        ?>
-                                    <?php echo "<td>";
-                                        echo $row['tags'];
-                                        echo "</td>";
-                                        ?>
+                                    <td><?php echo $row['author']; ?></td>
+                                    <td><?php echo $row['tags']; ?></td>
 
-                                    <?php echo "<td>";
-                                        echo '<img src="images/' . $row["book_image"] . '" alt="no_image"> </img>';
-                                        echo "</td>";
-                                        ?>
 
+                                    <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['book_id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['book_id'] ?>">Delete</a></td>
                                     </td>
                                 </tr>

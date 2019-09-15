@@ -81,7 +81,6 @@ if ($_POST) {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Image</label>
                             <div class="mb-3">
                                 <input type="file" name="book_image" id="book_image">
                             </div>

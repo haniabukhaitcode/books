@@ -94,27 +94,27 @@ if ($_POST) {
                                 $result = $tag->read();
                                 // put them in a select drop-down
 
-                                foreach ($result as $row) {
 
-                                    if (in_array($row['id'], $book->tagIds))
-                                        echo "<option selected value='{$row['id']}'>{$row['tag']}</option>";
-                                    else
-                                        echo "<option value='{$row['id']}'>{$row['tag']}</option>";
-                                }
+                                foreach ($result as $row) : ?> {
+                                    <?php if (in_array($row['id'], $book->tagIds))
+                                            echo "<option selected value='{$row['id']}'>{$row['tag']}</option>";
+                                        else
+                                            echo "<option value='{$row['id']}'>{$row['tag']}</option>";
 
-                                ?>
+                                        ?>
+                                <?php endforeach;  ?>
                             </select>
                             <div>
                                 <div class="mt-3">
                                     <label>Image</label>
                                     <input type="file" name="book_image" id="book_image">
                                     <?php
-                                    if (!empty($book->book_image)) {
-                                        echo "<td>";
-                                        echo '<img src="images/' . $book->book_image . '" alt="no_image"> </img>';
-                                        echo "</td>";
-                                    }
-                                    ?>
+                                    if (!empty($book->book_image)) : ?> {
+                                        <td>
+                                            <img src="/books/uploads/' . $book->book_image . '" alt="no_image" style="width:100px;height:100px;" />
+                                        </td>;
+                                        }
+                                    <?php endif; ?>
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-primary">Update</button>

@@ -186,7 +186,7 @@ class Book
 
         print_r($stmt->errorInfo());
 
-        header("Location: index.php");
+        //header("Location: index.php");
     }
     //**Delete**
     public function delete($book_id)
@@ -208,7 +208,7 @@ class Book
         if ($this->book_image) {
 
             // sha1_file() function is used to make a unique file name
-            $target_directory = $_SERVER['DOCUMENT_ROOT'] . "/books/images/";
+            $target_directory = $_SERVER['DOCUMENT_ROOT'] . "/books/main/uploads/";
             $target_file = $target_directory  . $this->book_image["name"];
             $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 
@@ -237,13 +237,6 @@ class Book
             if ($this->book_image['size'] > (99999999999999999999)) {
                 $file_upload_error_messages .= "<div>Image must be less than 1 MB in size.</div>";
             }
-
-            // make sure the 'uploads' folder exists
-            // if not, create it
-            if (!is_dir($target_directory)) {
-                mkdir($target_directory, 775, true);
-            }
-            move_uploaded_file($this->book_image["tmp_name"], $target_file);
         }
 
         return array(
