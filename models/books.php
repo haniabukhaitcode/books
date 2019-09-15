@@ -124,6 +124,7 @@ class Book
     WHERE books.book_id = ?
     GROUP BY
         books.book_id";
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
@@ -159,25 +160,18 @@ class Book
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
 
-
-
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
         $stmt->bindParam(":book_image", $imageName);
         $stmt->bindParam(":book_id", $id);
-
         $stmt->execute();
+
         $id = (int) $id;
-
-
-
-
         $delStmt->execute();
 
 
         foreach ($this->tag_id as $tag) {
-
             $tagStmnt = $this->conn->prepare($tagQuery);
             $tagStmnt->bindParam(":tag_id", $tag);
             $tagStmnt->bindParam(":book_id", $id);
@@ -185,8 +179,7 @@ class Book
         }
 
         print_r($stmt->errorInfo());
-
-        //header("Location: index.php");
+        header("Location: index.php");
     }
     //**Delete**
     public function delete($book_id)
@@ -203,7 +196,6 @@ class Book
     {
 
         $result_message = "";
-
         // now, if image is not empty, try to upload the image
         if ($this->book_image) {
 
