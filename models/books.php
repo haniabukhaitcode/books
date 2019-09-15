@@ -54,9 +54,10 @@ class Book
             $tagStmnt->execute();
         }
 
-        //header("Location: index.php");
+        header("Location: index.php");
         print_r($stmt->errorInfo());
     }
+
     //**Read All**
     function readAll()
     {
@@ -107,6 +108,7 @@ class Book
         books.book_image,
         authors.id author,
         GROUP_CONCAT(tags.id SEPARATOR ',') tags
+        
     FROM
         books
     JOIN
@@ -121,7 +123,9 @@ class Book
         tags
     ON
         tags.id = books_tags.tag_id
+
     WHERE books.book_id = ?
+
     GROUP BY
         books.book_id";
 
@@ -146,20 +150,18 @@ class Book
             title = :title,
             author_id = :author_id,
             book_image = :book_image
-    
         WHERE
             book_id = :book_id";
+
         $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:book_id, :tag_id) ";
+
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);
         $delStmt = $this->conn->prepare($deleteTags);
         // **Controlling Values From User**
-        // remving tags (htmlspecialchars)
-        // allowing variables only (strip_tags)
         $imageName = $this->uploadPhoto()["name"];
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
-
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);

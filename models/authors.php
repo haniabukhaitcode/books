@@ -1,20 +1,16 @@
 <?php
 class Author
 {
-    // database connection and table title
     private $conn;
     private $table_name = "authors";
-    // object properties
     public $id;
     public $author;
     public function __construct($db)
     {
         $this->conn = $db;
     }
-    // used by select drop-down list
     function read()
     {
-        //select all data
         $query = "SELECT
                     id, author
                 FROM
@@ -22,14 +18,12 @@ class Author
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll();
-
         return $result;
     }
 
     function readOne($id)
     {
         $query = "SELECT id, author FROM authors WHERE id = ?";
-
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
@@ -39,7 +33,6 @@ class Author
 
 
     function update($id)
-
     {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $bookQuery = "UPDATE
@@ -48,7 +41,6 @@ class Author
             author = :author
     
         WHERE
-            
         id = :id";
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);

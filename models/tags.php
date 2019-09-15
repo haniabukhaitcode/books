@@ -53,8 +53,7 @@ class Tag
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);
         // **Controlling Values From User**
-        // remving tags (htmlspecialchars)
-        // allowing variables only (strip_tags)
+
         $this->tag = htmlspecialchars(strip_tags($this->tag));
 
 
