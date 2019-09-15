@@ -73,7 +73,7 @@ if ($_POST) {
                                     // put them in a select drop-down
 
                                     foreach ($result as $row) {
-                                        echo "<option value='{$row['tag_id']}'>{$row['tag']}</option>";
+                                        echo "<option value='{$row['id']}'>{$row['tag']}</option>";
                                     }
 
                                     ?>

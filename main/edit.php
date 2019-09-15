@@ -96,10 +96,10 @@ if ($_POST) {
 
                                 foreach ($result as $row) {
 
-                                    if (in_array($row['tag_id'], $book->tagIds))
-                                        echo "<option selected value='{$row['tag_id']}'>{$row['tag']}</option>";
+                                    if (in_array($row['id'], $book->tagIds))
+                                        echo "<option selected value='{$row['id']}'>{$row['tag']}</option>";
                                     else
-                                        echo "<option value='{$row['tag_id']}'>{$row['tag']}</option>";
+                                        echo "<option value='{$row['id']}'>{$row['tag']}</option>";
                                 }
 
                                 ?>

@@ -54,7 +54,8 @@ class Book
             $tagStmnt->execute();
         }
 
-        header("Location: index.php");
+        //header("Location: index.php");
+        print_r($stmt->errorInfo());
     }
     //**Read All**
     function readAll()
@@ -183,6 +184,8 @@ class Book
             $tagStmnt->execute();
         }
 
+        print_r($stmt->errorInfo());
+
         header("Location: index.php");
     }
     //**Delete**
@@ -231,14 +234,14 @@ class Book
             }
 
             // make sure submitted file is not too large, can't be larger than 1 MB
-            if ($this->book_image['size'] > (1024000)) {
+            if ($this->book_image['size'] > (99999999999999999999)) {
                 $file_upload_error_messages .= "<div>Image must be less than 1 MB in size.</div>";
             }
 
             // make sure the 'uploads' folder exists
             // if not, create it
             if (!is_dir($target_directory)) {
-                mkdir($target_directory, 0777, true);
+                mkdir($target_directory, 775, true);
             }
             move_uploaded_file($this->book_image["tmp_name"], $target_file);
         }
