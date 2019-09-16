@@ -73,7 +73,7 @@ $tag = new Tag($db);
                                 <tr>
                                     <th scope="row"><?php echo $row['book_id']; ?></th>
                                     <td><?php echo $row['title']; ?></td>
-                                    <td><a href="/books/authorBooks/authorBook.php"><?php echo $row['author']; ?></a></td>
+                                    <td><a href="/books/authorBooks/index.php"><?php echo $row['author']; ?></a></td>
                                     <td><?php echo $row['tags']; ?></td>
                                     <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['book_id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['book_id'] ?>">Delete</a></td>
