@@ -12,9 +12,19 @@ class AuthorBook
     function read()
     {
         $query = "SELECT
-                    book_id, title, book_image
-                FROM
-                    " . $this->table_name . "";
+        books.book_id,
+        books.title,
+        books.book_image,
+        authors.author
+    FROM
+        books
+    Left  JOIN
+        authors
+    ON
+        authors.id = books.author_id";
+
+
+
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll();
