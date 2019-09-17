@@ -11,30 +11,7 @@ class AuthorBook
     {
         $this->conn = $db;
     }
-
-    function read()
-    {
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-
-        $query = "SELECT
-        books.book_id,
-        books.title,
-        books.book_image,
-        authors.author,
-        authors.id AS author_id
-    FROM
-        books
-    LEFT JOIN
-        authors
-    ON
-    authors.id = books.author_id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        print_r($stmt->errorInfo());
-
-        return $result;
-    }
+   
 
     function readOne($id)
     {
@@ -44,10 +21,10 @@ class AuthorBook
         books.author_id,
         books.title,
         books.book_image,
-        authors.id author
+        authors.author author
     FROM
         books
-    LEFT JOIN
+    JOIN
         authors
     ON
     authors.id = books.author_id
@@ -56,10 +33,8 @@ class AuthorBook
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);
-        $this->author = $row->author;
-        $this->title = $row->title;
-        $this->book_image = $row->book_image;
+        $result = $stmt->fetchAll();
+        return $result;
         print_r($stmt->errorInfo());
     }
 }

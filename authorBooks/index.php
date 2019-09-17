@@ -10,13 +10,11 @@ include_once '../models/authors.php';
 
 $database = new Database();
 $db = $database->getConnection();
+
 $authorBook = new AuthorBook($db);
-$authorBook->readOne($id);
-if ($_POST) {
-    $authorBook->author = $_POST['author'];
-    $authorBook->title = $_POST['title'];
-    $authorBook->book_image = $_POST['book_image'];
-}
+
+$result = $authorBook->readOne($id);
+
 ?>
 
 <!DOCTYPE html>
@@ -49,8 +47,7 @@ if ($_POST) {
 
                         <div>
                             <?php
-                            $authorsId = $authorBook->read();
-                            foreach ($authorsId as $row) :  ?>
+                            foreach ($result as $row) :  ?>
                                 <tr>
                                     <th scope="row"><?php echo $row['author_id']; ?></th>
                                     <td><?php echo $row['author']; ?></td>
