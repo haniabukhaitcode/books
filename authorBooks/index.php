@@ -1,6 +1,6 @@
 <?php
 
-$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
+$id = isset($_GET['id']) ? $_GET['id'] : var_dump($id);
 
 include_once '../config/recordLimit.php';
 include_once '../config/database.php';
@@ -8,22 +8,12 @@ include_once '../models/authorbooks.php';
 include_once '../models/books.php';
 include_once '../models/authors.php';
 
-
-
 $database = new Database();
 $db = $database->getConnection();
-$authorbook = new AuthorBook($db);
-$book = new Book($db);
-$author = new Author($db);
-
-$authorbook->readOne($id);
-
-
+$authorBook = new AuthorBook($db);
+$authorBook->readOne($id);
 
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,47 +33,34 @@ $authorbook->readOne($id);
 
     <!-- Table -->
 
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="jumbotron">
-                    <div class="row">
-                        <h4 class="col-12 mb-3">All Books</h4>
-                    </div>
-
-                    <table class="table table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col">Title</th>
-                                <th scope="col">Author</th>
-                                <th scope="col">Images</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="jumbotron">
+                        <div class="row">
+                            <h4 class="col-12 mb-3">All Authors Books</h4>
+                        </div>
+                        <div>
                             <?php
-
-                            $authorbooks = $authorbook->read();
-
-                            foreach ($authorbooks as $row) :  ?>
+                            $authorsId = $authorBook->read();
+                            foreach ($authorsId as $row) :  ?>
                                 <tr>
                                     <th scope="row"><?php echo $row['book_id']; ?></th>
-
+                                    <td><?php echo $row['author']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['author']; ?></a></td>
                                     <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
+
+                                    </td>
                                 </tr>
+
                             <?php endforeach; ?>
-
-
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
 
 </html>
