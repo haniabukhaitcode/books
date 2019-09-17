@@ -68,6 +68,7 @@ class Book
         books.title,
         books.book_image,
         authors.author,
+        authors.id AS author_id,
         GROUP_CONCAT(tags.tag SEPARATOR ',') tags
     FROM
         books

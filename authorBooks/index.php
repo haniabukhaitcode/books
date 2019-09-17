@@ -9,14 +9,14 @@ include_once '../models/authorbooks.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$authorbooks = new AuthorBook($db);
+$authorbook = new AuthorBook($db);
 
-$authorbooks->readOne($id);
+$authorbook->readOne($id);
 
 if ($_POST) {
-    $authorbooks->title = $_POST['title'];
-    $authorbooks->book_image = $_POST['book_image'];
-    $authorbooks->author_id = $_POST['author_id'];
+    $authorbook->title = $_POST['title'];
+    $authorbook->book_image = $_POST['book_image'];
+    $authorbook->author_id = $_POST['author_id'];
 }
 
 ?>
@@ -43,51 +43,19 @@ if ($_POST) {
     <!-- Table -->
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
+        <?php
 
-        <div class="mt-3">
-            <label>Author</label>
-            <div name='author_id'>
-                <?php
-                $result = $authorbooks->read();
-                foreach ($result as $row) :  ?>
-                    <div><?php echo $row['author']; ?></div>
+        $authorbooks = $authorbook->read();
 
-                <?php endforeach; ?>
-
-            </div>
-        </div>
-        <div class="mt-3">
-            <label>Title</label>
-            <div name='author_id'>
-                <?php
-                $result = $authorbooks->read();
-                foreach ($result as $row) :  ?>
-                    <div><?php echo $row['title']; ?></div>
-
-                <?php endforeach; ?>
-
-            </div>
-        </div>
-        <div class="mt-3">
-            <label>book_image</label>
-
-            <?php
-            $result = $authorbooks->read();
-            foreach ($result as $row) :  ?>
-                <div name='book_image'>
-                    <div><?php echo $row['book_image']; ?></div>
-                </div>
-                <div name='title'>
-                    <div><?php echo $row['title']; ?></div>
-                </div>
-                <div name='author'>
-                    <div><?php echo $row['author']; ?></div>
-                </div>
-            <?php endforeach; ?>
-
-
-        </div>
-
+        foreach ($authorbooks as $row) :  ?>
+            <tr>
+                <th scope="row"><?php echo $row['book_id']; ?></th>
+                <td><?php echo $row['title']; ?></td>
+                <td><?php echo $row['author_id']; ?></td>
+                <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
+                </td>
+            </tr>
+        <?php endforeach; ?>
 
 
     </form>
