@@ -1,6 +1,6 @@
 <?php
 
-$id = isset($_GET['id']) ? $_GET['id'] : var_dump($id);
+$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
 include_once '../config/recordLimit.php';
 include_once '../config/database.php';
@@ -12,7 +12,11 @@ $database = new Database();
 $db = $database->getConnection();
 $authorBook = new AuthorBook($db);
 $authorBook->readOne($id);
-
+if ($_POST) {
+    $authorBook->author = $_POST['author'];
+    $authorBook->title = $_POST['title'];
+    $authorBook->book_image = $_POST['book_image'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,34 +37,33 @@ $authorBook->readOne($id);
 
     <!-- Table -->
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
 
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="jumbotron">
-                        <div class="row">
-                            <h4 class="col-12 mb-3">All Authors Books</h4>
-                        </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="jumbotron">
+                    <div class="row">
+                        <h4 class="col-12 mb-3">All Authors Books</h4>
+                    </div>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
+
                         <div>
                             <?php
                             $authorsId = $authorBook->read();
                             foreach ($authorsId as $row) :  ?>
                                 <tr>
-                                    <th scope="row"><?php echo $row['book_id']; ?></th>
+                                    <th scope="row"><?php echo $row['author_id']; ?></th>
                                     <td><?php echo $row['author']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
-
-                                    </td>
                                 </tr>
-
                             <?php endforeach; ?>
+
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
 </html>
