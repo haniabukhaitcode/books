@@ -13,11 +13,7 @@ $authorbook = new AuthorBook($db);
 
 $authorbook->readOne($id);
 
-if ($_POST) {
-    $authorbook->title = $_POST['title'];
-    $authorbook->book_image = $_POST['book_image'];
-    $authorbook->author_id = $_POST['author_id'];
-}
+
 
 ?>
 
@@ -42,26 +38,46 @@ if ($_POST) {
 
     <!-- Table -->
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
-        <?php
 
-        $authorbooks = $authorbook->read();
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="jumbotron">
+                    <div class="row">
+                        <h4 class="col-12 mb-3">All Books</h4>
+                    </div>
 
-        foreach ($authorbooks as $row) :  ?>
-            <tr>
-                <th scope="row"><?php echo $row['book_id']; ?></th>
-                <td><?php echo $row['title']; ?></td>
-                <td><?php echo $row['author_id']; ?></td>
-                <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Images</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+
+                            $authorbooks = $authorbook->read();
+
+                            foreach ($authorbooks as $row) :  ?>
+
+                                <tr>
+                                    <td><?php echo $row['title']; ?></td>
+                                    <td><?php echo $row['author']; ?></a></td>
+                                    <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
 
 
-    </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-</body>
 
 </html>
