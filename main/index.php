@@ -65,6 +65,7 @@ $book = new Book($db);
 
                             $books = $book->readAll();
 
+
                             foreach ($books as $row) :  ?>
 
                                 <tr>

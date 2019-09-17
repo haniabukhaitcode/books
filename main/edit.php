@@ -1,5 +1,4 @@
 <?php
-
 $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
 include_once '../config/database.php';
@@ -57,11 +56,13 @@ if ($_POST) {
                                 // read the product categories from the database
                                 $result = $author->read();
                                 // put them in a select drop-down
-
-                                foreach ($result as $row) : ?>
-                                    <option selected value=<?php $row['id']; ?>><?php $row['author']; ?></option>";
-                                    <option value=<?php $row['id']; ?>><?php $row['author']; ?></option>";
-                                <?php endforeach  ?>
+                                foreach ($result as $row) {
+                                    if ($book->author_id == $row['id'])
+                                        echo "<option selected value='{$row['id']}'>{$row['author']}</option>";
+                                    else
+                                        echo "<option value='{$row['id']}'>{$row['author']}</option>";
+                                }
+                                ?>
 
                             </select>
                         </div>
@@ -69,14 +70,15 @@ if ($_POST) {
                             <label>Tag</label>
                             <select class=' form-control' name='tag_id[]' multiple='multiple'>
                                 <?php
+                                // read the product categories from the database
                                 $result = $tag->read();
-
-                                foreach ($result as $row) : ?>
-
-                                    <option selected value=<?php echo $row['id']; ?>><?php $row['tag'] ?></option>;
-
-                                    <option value=<?php $row['id']; ?>><?php $row['tag']; ?></option>;
-
+                                // put them in a select drop-down
+                                foreach ($result as $row) : ?> {
+                                    <?php if (in_array($row['id'], $book->tagIds))
+                                            echo "<option selected value='{$row['id']}'>{$row['tag']}</option>";
+                                        else
+                                            echo "<option value='{$row['id']}'>{$row['tag']}</option>";
+                                        ?>
                                 <?php endforeach;  ?>
                             </select>
                             <div>

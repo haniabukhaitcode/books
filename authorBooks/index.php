@@ -41,22 +41,22 @@ $result = $authorBook->readOne($id);
             <div class="col-lg-12">
                 <div class="jumbotron">
                     <div class="row">
-                        <h4 class="col-12 mb-3">All Authors Books</h4>
+                        <h4 class="col-12 mb-3">All Authors Books </h4>
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
 
                         <div>
                             <?php
                             foreach ($result as $row) :  ?>
-                                <tr>
-                                    <th scope="row"><?php echo $row['author_id']; ?></th>
-                                    <td><?php echo $row['author']; ?></td>
-                                    <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                                <div>
+                                    <div scope="row"><?php echo $row['author_id']; ?></div>
+                                    <div><?php echo $row['author']; ?></div>
+                                    <div><?php echo $row['title']; ?></div>
+                                    <div><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:200px;height:200px;"> </img>'; ?></td>
 
-                        </div>
+                                    <?php endforeach; ?>
+
+                                    </div>
                     </form>
                 </div>
             </div>
