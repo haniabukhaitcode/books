@@ -39,28 +39,28 @@ $result = $authorBook->readOne($id);
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-12">
-                <div class="jumbotron">
-                    <div class="row">
-                        <h4 class="col-12 mb-3">All Authors Books </h4>
-                    </div>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
-
-                        <div>
-                            <?php
-                            foreach ($result as $row) :  ?>
-                                <div>
-                                    <div scope="row"><?php echo $row['author_id']; ?></div>
-                                    <div><?php echo $row['author']; ?></div>
-                                    <div><?php echo $row['title']; ?></div>
-                                    <div><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:200px;height:200px;"> </img>'; ?></td>
-
-                                    <?php endforeach; ?>
-
-                                    </div>
-                    </form>
+                <div class="row">
+                    <h4 class="col-12 mb-3">All Authors Books </h4>
                 </div>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
+                    <div class="row no-gutters">
+                        <?php
+                        foreach ($result as $row) :  ?>
+
+                            <div class="card col">
+                                <?php echo '<img class="card-img-top" src="/books/uploads/' . $row["book_image"] . '" alt="no_image";"> </img>'; ?>
+                                <div class="card-body">
+                                    <p class="card-text">Author Name: <?php echo $row['author']; ?></p>
+                                    <p class="card-text">Book Title: <?php echo $row['title']; ?></p>
+                                </div>
+                            </div>
+
+
+                        <?php endforeach; ?>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 
 </html>
