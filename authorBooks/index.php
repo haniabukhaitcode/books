@@ -1,15 +1,20 @@
 <?php
+
 $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
 include_once '../config/recordLimit.php';
 include_once '../config/database.php';
 include_once '../models/authorbooks.php';
+include_once '../models/books.php';
+include_once '../models/authors.php';
 
 
 
 $database = new Database();
 $db = $database->getConnection();
 $authorbook = new AuthorBook($db);
+$book = new Book($db);
+$author = new Author($db);
 
 $authorbook->readOne($id);
 
@@ -63,8 +68,9 @@ $authorbook->readOne($id);
                             $authorbooks = $authorbook->read();
 
                             foreach ($authorbooks as $row) :  ?>
-
                                 <tr>
+                                    <th scope="row"><?php echo $row['book_id']; ?></th>
+
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo $row['author']; ?></a></td>
                                     <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>

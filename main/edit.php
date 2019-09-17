@@ -58,14 +58,10 @@ if ($_POST) {
                                 $result = $author->read();
                                 // put them in a select drop-down
 
-                                foreach ($result as $row) {
-                                    if ($book->author_id == $row['id'])
-                                        echo "<option selected value='{$row['id']}'>{$row['author']}</option>";
-                                    else
-                                        echo "<option value='{$row['id']}'>{$row['author']}</option>";
-                                }
-
-                                ?>
+                                foreach ($result as $row) : ?>
+                                    <option selected value=<?php $row['id']; ?>><?php $row['author']; ?></option>";
+                                    <option value=<?php $row['id']; ?>><?php $row['author']; ?></option>";
+                                <?php endforeach  ?>
 
                             </select>
                         </div>
@@ -73,18 +69,14 @@ if ($_POST) {
                             <label>Tag</label>
                             <select class=' form-control' name='tag_id[]' multiple='multiple'>
                                 <?php
-                                // read the product categories from the database
                                 $result = $tag->read();
-                                // put them in a select drop-down
 
+                                foreach ($result as $row) : ?>
 
-                                foreach ($result as $row) : ?> {
-                                    <?php if (in_array($row['id'], $book->tagIds))
-                                            echo "<option selected value='{$row['id']}'>{$row['tag']}</option>";
-                                        else
-                                            echo "<option value='{$row['id']}'>{$row['tag']}</option>";
+                                    <option selected value=<?php echo $row['id']; ?>><?php $row['tag'] ?></option>;
 
-                                        ?>
+                                    <option value=<?php $row['id']; ?>><?php $row['tag']; ?></option>;
+
                                 <?php endforeach;  ?>
                             </select>
                             <div>

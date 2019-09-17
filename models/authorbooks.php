@@ -5,8 +5,8 @@ class AuthorBook
 
     public $book_id;
     public $title;
-    public $id;
     public $author_id;
+    public $tag_id;
     public function __construct($db)
     {
         $this->conn = $db;
@@ -37,8 +37,7 @@ class AuthorBook
         books.book_id,
         books.title,
         books.book_image,
-        authors.author,
-        authors.id as author_id
+        authors.id author
     FROM
         books
     LEFT JOIN
@@ -46,12 +45,14 @@ class AuthorBook
     ON
         authors.id = books.author_id
     WHERE
-        author_id = ?";
+    books.book_id = ?";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);
-        $this->author_id = $row->author_id;
+        $this->title = $row->title;
+        $this->author_id = $row->author;
+        $this->book_image = $row->book_image;
     }
 }
