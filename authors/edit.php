@@ -7,12 +7,13 @@ include_once '../models/authors.php';
 $database = new Database();
 $db = $database->getConnection();
 $author = new Author($db);
-$author->readOne($id);
+$author->viewOneAuthor($id);
 
 if ($_POST) {
     $author->author = $_POST['author'];
-    $author->update($id) ? true : false;
+    $author->updateAuthor($id) ? true : false;
 }
+
 ?>
 
 <!DOCTYPE html>

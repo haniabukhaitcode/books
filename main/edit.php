@@ -20,6 +20,7 @@ if ($_POST) {
     $book->book_image = $_FILES['book_image'];
     $book->update($id) ? true : false;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +36,6 @@ if ($_POST) {
 
 <body>
     <?php include('../navbar.html'); ?>
-
 
     <!-- Table -->
     <div class="container mt-4">
@@ -54,15 +54,16 @@ if ($_POST) {
                             <select class=' form-control' name='author_id'>
                                 <?php
                                 // read the product categories from the database
-                                $result = $author->read();
+                                $result = $author->fetchAuthors();
                                 // put them in a select drop-down
-                                foreach ($result as $row) {
-                                    if ($book->author_id == $row['id'])
-                                        echo "<option selected value='{$row['id']}'>{$row['author']}</option>";
-                                    else
-                                        echo "<option value='{$row['id']}'>{$row['author']}</option>";
-                                }
-                                ?>
+                                foreach ($result as $row) :
+                                    if ($book->author_id == $row['id']) :
+                                        ?>
+                                        <option selected value="<?= $row['id'] ?>"><?= $row['author'] ?></option>
+                                    <?php else : ?>
+                                        <option value="<?= $row['id'] ?>"><?= $row['author'] ?></option>
+                                <?php endif;
+                                endforeach; ?>
 
                             </select>
                         </div>
@@ -73,13 +74,14 @@ if ($_POST) {
                                 // read the product categories from the database
                                 $result = $tag->read();
                                 // put them in a select drop-down
-                                foreach ($result as $row) : ?> {
-                                    <?php if (in_array($row['id'], $book->tagIds))
-                                            echo "<option selected value='{$row['id']}'>{$row['tag']}</option>";
-                                        else
-                                            echo "<option value='{$row['id']}'>{$row['tag']}</option>";
-                                        ?>
-                                <?php endforeach;  ?>
+                                foreach ($result as $row) :
+                                    if (in_array($row['id'], $book->tagIds)) : ?>
+                                        <option selected value=<?= $row['id'] ?>><?= $row['tag'] ?></option>
+                                    <?php else : ?>
+                                        <option value=<?= $row['id'] ?>><?= $row['tag'] ?></option>
+                                <?php endif;
+                                endforeach; ?>
+
                             </select>
                             <div>
                                 <div class="mt-3">

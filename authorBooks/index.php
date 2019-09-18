@@ -9,11 +9,13 @@ include_once '../models/books.php';
 include_once '../models/authors.php';
 
 $database = new Database();
+
 $db = $database->getConnection();
 
 $authorBook = new AuthorBook($db);
 
-$result = $authorBook->readOne($id);
+$result = $authorBook->fetchAuthorBooks($id);
+
 
 ?>
 
@@ -40,8 +42,9 @@ $result = $authorBook->readOne($id);
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
-                    <h4 class="col-12 mb-3">All Authors Books </h4>
+                    <h4 class="col-12 mb-3" name="author"> Title</h4>
                 </div>
+
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
                     <div class="row no-gutters">
                         <?php

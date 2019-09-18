@@ -8,7 +8,7 @@ $author = new Author($db);
 
 if ($_POST) {
     $author->author = $_POST['author'];
-    $author->create() ? true : false;
+    $author->createAuthor() ? true : false;
 }
 ?>
 

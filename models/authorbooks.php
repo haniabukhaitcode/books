@@ -4,8 +4,6 @@ class AuthorBook
     private $conn;
     public $id;
     public $author;
-    public $title;
-    public $book_image;
 
     public function __construct($db)
     {
@@ -13,7 +11,8 @@ class AuthorBook
     }
 
 
-    function readOne($id)
+
+    function fetchAuthorBooks($id)
     {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $query = "SELECT

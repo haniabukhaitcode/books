@@ -29,8 +29,7 @@ class Book
         $stmt = $this->conn->prepare($bookQuery);
         $imageName = $this->uploadPhoto()["name"];
         // **Controlling Values From User**
-        // remving tags (htmlspecialchars)
-        // allowing variables only (strip_tags)
+
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
 

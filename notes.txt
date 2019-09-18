@@ -1,12 +1,9 @@
-CASCADE will propagate the change when the parent changes. 
-(If you delete a row, rows in constrained tables that reference that row will also be deleted, etc.)
+TODOS
+1- Fix Syntax
+2- AuthorBooks.php Heading referes to the chosen author
+3- Tag Page => input with button(Go) 
+    -type tag number inside input
+    -button click finds all books with the chosen book number
 
-SET NULL sets the column value to NULL when a parent row goes away.
+4-Learn the inharitance object oriented programming (Make Dynamic Reusables Functions)
 
-RESTRICT causes the attempted DELETE of a parent row to fail.
-
-EDIT: You didn't ask about them, but the SQL standard defines two other actions: SET DEFAULT and NO ACTION.
-In MySQL, NO ACTION is equivalent to RESTRICT.
-(In some DBMSs, NO ACTION is a deferred check, but in MySQL all checks are immediate.)
-The MySQL parser accepts SET DEFAULT, but both the InnoDB and NDB engines reject those statements,
-so SET DEFAULT can't actually be used for either an ON UPDATE or ON DELETE constraint.

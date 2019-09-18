@@ -4,10 +4,11 @@ include_once '../models/authors.php';
 
 $database = new Database();
 $db = $database->getConnection();
+
 if (isset($_GET['del'])) {
     $id = $_GET['del'];
     $author = new Author($db);
-    $author->delete($id);
+    $author->deleteAuthor($id);
 }
 ?>
 

@@ -26,7 +26,6 @@ $author = new Author($db);
     <!-- Navbar -->
     <?php include('../navbar.html'); ?>
 
-
     <!-- Table -->
     <div class="container mt-4">
         <div class="row">
@@ -48,12 +47,11 @@ $author = new Author($db);
 
                         <tbody>
                             <?php
-                            $authors = $author->read();
+                            $authors = $author->fetchAuthors();
                             foreach ($authors as $row) :  ?>
                                 <tr>
                                     <th scope="row"><?php echo $row['id']; ?></th>
                                     <td><?php echo $row['author']; ?></td>
-
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
                                     </td>
                                 </tr>
@@ -64,7 +62,6 @@ $author = new Author($db);
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

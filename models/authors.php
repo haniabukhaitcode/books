@@ -5,11 +5,12 @@ class Author
     private $table_name = "authors";
     public $id;
     public $author;
+
     public function __construct($db)
     {
         $this->conn = $db;
     }
-    function read()
+    function fetchAuthors()
     {
         $query = "SELECT
                     id, author
@@ -21,7 +22,7 @@ class Author
         return $result;
     }
 
-    function readOne($id)
+    function viewOneAuthor($id)
     {
         $query = "SELECT id, author FROM authors WHERE id = ?";
         $stmt = $this->conn->prepare($query);
@@ -32,7 +33,7 @@ class Author
     }
 
 
-    function update($id)
+    function updateAuthor($id)
     {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $bookQuery = "UPDATE
@@ -45,11 +46,7 @@ class Author
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);
         // **Controlling Values From User**
-        // remving tags (htmlspecialchars)
-        // allowing variables only (strip_tags)
         $this->author = htmlspecialchars(strip_tags($this->author));
-
-
 
         // bind values
         $stmt->bindParam(":author", $this->author);
@@ -58,7 +55,7 @@ class Author
         header("Location: index.php");
     }
 
-    public function delete($id)
+    public function deleteAuthor($id)
     {
         $query = "DELETE FROM authors WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -68,7 +65,8 @@ class Author
             header("Location: index.php");
         }
     }
-    function create()
+
+    function createAuthor()
     {
 
         //sql
