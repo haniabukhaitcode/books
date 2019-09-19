@@ -1,6 +1,5 @@
 <?php
 
-include_once '../config/recordLimit.php';
 include_once '../config/database.php';
 include_once '../models/authors.php';
 
