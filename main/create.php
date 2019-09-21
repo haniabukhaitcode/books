@@ -52,14 +52,12 @@ if ($_POST) {
                                 <select class='form-control' name='author_id'>
                                     <?php
                                     // read the product categories from the database
-                                    $result = $author->read();
+                                    $authors = $author->fetchAuthors();
                                     // put them in a select drop-down
 
-                                    foreach ($result as $row) {
-                                        echo "<option value='{$row['id']}'>{$row['author']}</option>";
-                                    }
-
-                                    ?>
+                                    foreach ($authors as $row) : ?>
+                                        <option value="<?= $row['id'] ?>"><?= $row['author'] ?></option>";
+                                    <?php endforeach;   ?>
                                 </select>
                             </div>
                         </div>
