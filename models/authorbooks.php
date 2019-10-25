@@ -16,7 +16,7 @@ class AuthorBook
     {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $query = "SELECT
-        books.book_id,
+        books.id,
         books.author_id,
         books.title,
         books.book_image,

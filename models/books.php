@@ -22,11 +22,13 @@ class Book
 
         //sql
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-        $lastId = "select max(book_id) book_id from " . $this->table_name . "";
+        $lastId = "select max(id) id from " . $this->table_name . "";
         $bookQuery = "INSERT INTO " . $this->table_name . "(title, author_id, book_image) VALUES(:title, :author_id, :book_image) ";
+
         $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:inserted_id, :tag_id) ";
         //statement connection with prepare    
         $stmt = $this->conn->prepare($bookQuery);
+
         $imageName = $this->uploadPhoto()["name"];
         // **Controlling Values From User**
 
@@ -42,7 +44,7 @@ class Book
         $sth = $this->conn->query($lastId);
 
         $insertedId = $sth->fetchAll();
-        $bookId =  $insertedId[0]["book_id"];
+        $bookId =  $insertedId[0]["id"];
 
         foreach ($this->tag_id as $tag) {
 
@@ -53,16 +55,17 @@ class Book
         }
 
         header("Location: index.php");
+        return $stmt;
         print_r($stmt->errorInfo());
     }
 
     //**Read All**
-    function readAll()
+    function fetchAll()
     {
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
         $query = "SELECT
-        books.book_id,
+        books.id,
         books.title,
         books.book_image,
         authors.author,
@@ -77,17 +80,19 @@ class Book
   Left  JOIN
         books_tags
     ON
-        books_tags.book_id = books.book_id
+        books_tags.book_id = books.id
    Left JOIN
         tags
     ON
         tags.id = books_tags.tag_id
 
     GROUP BY
-        books.book_id";
+        books.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt;
+        $result =  $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $result;
         print_r($stmt->errorInfo());
     }
     //**Count All Paging Books**
@@ -102,7 +107,7 @@ class Book
     function readOne($id)
     {
         $query = "SELECT
-        books.book_id,
+        books.id,
         books.title,
         books.book_image,
         authors.id author,
@@ -117,16 +122,16 @@ class Book
     JOIN
         books_tags
     ON
-        books_tags.book_id = books.book_id
+        books_tags.book_id = books.id
     JOIN
         tags
     ON
         tags.id = books_tags.tag_id
 
-    WHERE books.book_id = ?
+    WHERE books.id = ?
 
     GROUP BY
-        books.book_id";
+        books.id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
@@ -179,30 +184,32 @@ class Book
             $tagStmnt->execute();
         }
 
+        return $stmt;
         print_r($stmt->errorInfo());
         header("Location: index.php");
     }
     //**Delete**
-    public function delete($book_id)
+    public function delete($id)
     {
-        $query = "DELETE FROM books WHERE book_id = :book_id";
+        $query = "DELETE FROM books WHERE id = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(":book_id", $book_id);
+        $stmt->bindValue(":id", $id);
         $stmt->execute();
         if ($stmt) {
             header("Location: index.php");
         }
+        return $stmt;
     }
     function uploadPhoto()
     {
-
+        $path = date('mdYHis');
         $result_message = "";
         // now, if image is not empty, try to upload the image
         if ($this->book_image) {
 
             // sha1_file() function is used to make a unique file name
-            $target_directory = $_SERVER['DOCUMENT_ROOT'] . "/books/main/uploads/";
-            $target_file = $target_directory  . $this->book_image["name"];
+            $target_directory = $_SERVER['DOCUMENT_ROOT'] . "//uploads/";
+            $target_file = $target_directory . $path  . $this->book_image["name"];
             $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 
             // error message is empty

@@ -1,12 +1,12 @@
 <?php
 $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
-include_once '../config/database.php';
+include_once '../config/connection.php';
 include_once '../models/books.php';
 include_once '../models/authors.php';
 include_once '../models/tags.php';
 
-$database = new Database();
+$database = new Connection();
 $db = $database->getConnection();
 $book = new Book($db);
 $author = new Author($db);
@@ -53,35 +53,27 @@ if ($_POST) {
                             <label>Author</label>
                             <select class=' form-control' name='author_id'>
                                 <?php
-                                // read the product categories from the database
-                                $result = $author->fetchAuthors();
-                                // put them in a select drop-down
-                                foreach ($result as $row) :
-                                    if ($book->author_id == $row['id']) :
+                                foreach ($author->fetchAll() as $row) :
+                                    if ($book->author_id == $row->id) :
                                         ?>
-                                        <option selected value="<?= $row['id'] ?>"><?= $row['author'] ?></option>
+                                        <option selected value="<?= $row->id ?>"><?= $row->author ?></option>
                                     <?php else : ?>
-                                        <option value="<?= $row['id'] ?>"><?= $row['author'] ?></option>
+                                        <option value="<?= $row->id ?>"><?= $row->author ?></option>
                                 <?php endif;
                                 endforeach; ?>
-
                             </select>
                         </div>
                         <div class="mt-3">
                             <label>Tag</label>
                             <select class=' form-control' name='tag_id[]' multiple='multiple'>
                                 <?php
-                                // read the product categories from the database
-                                $result = $tag->read();
-                                // put them in a select drop-down
-                                foreach ($result as $row) :
-                                    if (in_array($row['id'], $book->tagIds)) : ?>
-                                        <option selected value=<?= $row['id'] ?>><?= $row['tag'] ?></option>
+                                foreach ($tag->fetchAll() as $row) :
+                                    if (in_array($row->id, $book->tagIds)) : ?>
+                                        <option selected value=<?= $row->id ?>><?= $row->tag ?></option>
                                     <?php else : ?>
-                                        <option value=<?= $row['id'] ?>><?= $row['tag'] ?></option>
+                                        <option value=<?= $row->id ?>><?= $row->tag ?></option>
                                 <?php endif;
                                 endforeach; ?>
-
                             </select>
                             <div>
                                 <div class="mt-3">

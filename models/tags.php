@@ -12,7 +12,7 @@ class Tag
         $this->conn = $db;
     }
     // used by select drop-down list
-    function read()
+    function fetchAll()
     {
         //select all data
         $query = "SELECT
@@ -21,7 +21,8 @@ class Tag
                     " . $this->table_name . "";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
 
         return $result;
     }
@@ -74,6 +75,7 @@ class Tag
         if ($stmt) {
             header("Location: index.php");
         }
+        return $stmt;
     }
     function create()
     {
@@ -87,6 +89,7 @@ class Tag
         // bind values
         $stmt->bindParam(":tag", $this->tag);
         $stmt->execute();
+        return $stmt;
         print_r($stmt->errorInfo());
 
         // header("Location: index.php");

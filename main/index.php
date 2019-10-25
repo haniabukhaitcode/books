@@ -1,12 +1,12 @@
 <?php
 
-include_once '../config/database.php';
+include_once '../config/connection.php';
 include_once '../models/books.php';
 include_once '../models/authors.php';
 include_once '../models/tags.php';
 
 
-$database = new Database();
+$database = new Connection();
 
 $db = $database->getConnection();
 
@@ -58,27 +58,19 @@ $book = new Book($db);
 
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php
-
-                            $books = $book->readAll();
-
-
-                            foreach ($books as $row) :  ?>
-
+                            foreach ($book->fetchAll() as $row) : ?>
                                 <tr>
-                                    <th scope="row"><?php echo $row['book_id']; ?></th>
-                                    <td><?php echo $row['title']; ?></td>
-                                    <td><a href="/books/authorBooks/index.php?id=<?php echo $row["author_id"]; ?>"><?php echo $row['author']; ?></a></td>
-                                    <td><?php echo $row['tags']; ?></td>
-                                    <td><?php echo '<img src="/books/uploads/' . $row["book_image"] . '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
-                                    <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['book_id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['book_id'] ?>">Delete</a></td>
+                                    <th scope="row"><?= $row->id; ?></th>
+                                    <td><?= $row->title; ?></td>
+                                    <td><a href="/books/authorBooks/index.php?id=<?= $row->author_id; ?>"><?= $row->author; ?></a></td>
+                                    <td><?= $row->tags; ?></td>
+                                    <td><?= '<img src="/books/uploads/' . $row->book_image .  '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
+                                    <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?= $row->id; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?= $row->id ?>">Delete</a></td>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
-
-
+                            <?php endforeach;  ?>
                         </tbody>
                     </table>
                 </div>

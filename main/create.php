@@ -1,10 +1,10 @@
 <?php
-include_once '../config/database.php';
+include_once '../config/connection.php';
 include_once '../models/books.php';
 include_once '../models/authors.php';
 include_once '../models/tags.php';
 
-$database = new Database();
+$database = new Connection();
 $db = $database->getConnection();
 $book = new Book($db);
 $author = new Author($db);
@@ -17,6 +17,7 @@ if ($_POST) {
     $book->book_image = $_FILES['book_image'];
     $book->create() ? true : false;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -51,12 +52,8 @@ if ($_POST) {
                             <div class="mb-3">
                                 <select class='form-control' name='author_id'>
                                     <?php
-                                    // read the product categories from the database
-                                    $authors = $author->fetchAuthors();
-                                    // put them in a select drop-down
-
-                                    foreach ($authors as $row) : ?>
-                                        <option value="<?= $row['id'] ?>"><?= $row['author'] ?></option>";
+                                    foreach ($author->fetchAll() as $row) :  ?>
+                                        <option value="<?= $row->id ?>"><?= $row->author ?></option>";
                                     <?php endforeach;   ?>
                                 </select>
                             </div>
@@ -66,15 +63,9 @@ if ($_POST) {
                             <div class="mb-3">
                                 <select class='form-control' name='tag_id[]' multiple='multiple'>
                                     <?php
-                                    // read the product categories from the database
-                                    $result = $tag->read();
-                                    // put them in a select drop-down
-
-                                    foreach ($result as $row) {
-                                        echo "<option value='{$row['id']}'>{$row['tag']}</option>";
-                                    }
-
-                                    ?>
+                                    foreach ($tag->fetchAll() as $row) : ?>
+                                        <option value="<?= $row->id ?>"><?= $row->tag ?></option>";
+                                    <?php endforeach;   ?>
                                 </select>
                             </div>
                         </div>

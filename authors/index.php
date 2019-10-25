@@ -46,12 +46,12 @@ $author = new Author($db);
 
                         <tbody>
                             <?php
-                            $authors = $author->fetchAuthors();
-                            foreach ($authors as $row) :  ?>
+
+                            foreach ($author->fetchAll() as $row) :  ?>
                                 <tr>
-                                    <th scope="row"><?php echo $row['id']; ?></th>
-                                    <td><?php echo $row['author']; ?></td>
-                                    <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?php echo $row['id'] ?>">Delete</a></td>
+                                    <th scope="row"><?= $row->id; ?></th>
+                                    <td><?= $row->author; ?></td>
+                                    <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?= $row->id; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?= $row->id; ?>">Delete</a></td>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -10,7 +10,7 @@ class Author
     {
         $this->conn = $db;
     }
-    function fetchAuthors()
+    function fetchAll()
     {
         $query = "SELECT
                     id, author
@@ -18,7 +18,7 @@ class Author
                     " . $this->table_name . "";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
 
@@ -78,6 +78,7 @@ class Author
         // bind values
         $stmt->bindParam(":author", $this->author);
         $stmt->execute();
+        return $stmt;
         print_r($stmt->errorInfo());
 
         // header("Location: index.php");
