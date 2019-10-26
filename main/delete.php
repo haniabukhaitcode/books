@@ -1,7 +1,7 @@
 <?php
-include_once '../config/database.php';
+include_once '../config/connection.php';
 include_once '../models/books.php';
-$database = new Database();
+$database = new Connection();
 $db = $database->getConnection();
 if (isset($_GET['del'])) {
     $id = $_GET['del'];

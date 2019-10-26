@@ -36,7 +36,6 @@ $book = new Book($db);
 
     <!-- Table -->
 
-
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-12">
@@ -59,6 +58,7 @@ $book = new Book($db);
                             </tr>
                         </thead>
                         <tbody>
+
                             <?php
                             foreach ($book->fetchAll() as $row) : ?>
                                 <tr>
@@ -66,7 +66,7 @@ $book = new Book($db);
                                     <td><?= $row->title; ?></td>
                                     <td><a href="/books/authorBooks/index.php?id=<?= $row->author_id; ?>"><?= $row->author; ?></a></td>
                                     <td><?= $row->tags; ?></td>
-                                    <td><?= '<img src="/books/uploads/' . $row->book_image .  '" alt="no_image" style="width:100px;height:100px;"> </img>'; ?></td>
+                                    <td><?= '<img style="width:100px; height:100px;" class="card-img-top" src="/books/uploads/' . $row->book_image . '" alt="no_image";"/>'; ?></td>
                                     <td><a class="btn btn-sm btn-primary" href="edit.php?id=<?= $row->id; ?>">Edit</a> &nbsp; <a class="btn btn-sm btn-danger" href="delete.php?id=<?= $row->id ?>">Delete</a></td>
                                     </td>
                                 </tr>

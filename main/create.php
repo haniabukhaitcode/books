@@ -53,7 +53,7 @@ if ($_POST) {
                                 <select class='form-control' name='author_id'>
                                     <?php
                                     foreach ($author->fetchAll() as $row) :  ?>
-                                        <option value="<?= $row->id ?>"><?= $row->author ?></option>";
+                                        <option value="<?= $row->id ?>"><?= $row->author ?></option>;
                                     <?php endforeach;   ?>
                                 </select>
                             </div>
@@ -64,7 +64,7 @@ if ($_POST) {
                                 <select class='form-control' name='tag_id[]' multiple='multiple'>
                                     <?php
                                     foreach ($tag->fetchAll() as $row) : ?>
-                                        <option value="<?= $row->id ?>"><?= $row->tag ?></option>";
+                                        <option value="<?= $row->id ?>"><?= $row->tag ?></option>;
                                     <?php endforeach;   ?>
                                 </select>
                             </div>

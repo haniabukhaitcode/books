@@ -53,10 +53,11 @@ class Book
             $tagStmnt->bindParam(":inserted_id", $bookId);
             $tagStmnt->execute();
         }
-
-        header("Location: index.php");
+        if ($stmt) {
+            header("Location: index.php");
+        }
         return $stmt;
-        print_r($stmt->errorInfo());
+        header("Location: index.php");
     }
 
     //**Read All**
@@ -155,7 +156,7 @@ class Book
             author_id = :author_id,
             book_image = :book_image
         WHERE
-            book_id = :book_id";
+            id = :id";
 
         $tagQuery = "INSERT INTO  books_tags (book_id, tag_id) VALUES(:book_id, :tag_id) ";
 
@@ -170,7 +171,7 @@ class Book
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":author_id", $this->author_id);
         $stmt->bindParam(":book_image", $imageName);
-        $stmt->bindParam(":book_id", $id);
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
 
         $id = (int) $id;
@@ -184,9 +185,11 @@ class Book
             $tagStmnt->execute();
         }
 
+        if ($stmt) {
+            header("Location: index.php");
+        }
         return $stmt;
-        print_r($stmt->errorInfo());
-        header("Location: index.php");
+        // print_r($stmt->errorInfo());
     }
     //**Delete**
     public function delete($id)
@@ -204,13 +207,15 @@ class Book
     {
         $path = date('mdYHis');
         $result_message = "";
+
         // now, if image is not empty, try to upload the image
         if ($this->book_image) {
-
             // sha1_file() function is used to make a unique file name
+
             $target_directory = $_SERVER['DOCUMENT_ROOT'] . "//uploads/";
-            $target_file = $target_directory . $path  . $this->book_image["name"];
+            $target_file = $target_directory .  $path .   $this->book_image["name"];
             $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+
 
             // error message is empty
             $file_upload_error_messages = "";

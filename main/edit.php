@@ -80,9 +80,12 @@ if ($_POST) {
                                     <label>Image</label>
                                     <input type="file" name="book_image" id="book_image">
                                     <?php
-                                    if (!empty($book->book_image)) : ?>
+                                    $stmt = $book->fetchAll();
+                                    if (!empty($stmt->book_image)) : print_r($stmt->book_image);
+                                        die; ?>
+
                                         <td>
-                                            <img src="/books/uploads/' . $book->book_image . '" alt="" />
+                                            <?= '<img class="card-img-top" src="/books/uploads/' . $stmt->book_image . '" alt="no_image";"/>'; ?>
                                         </td>
                                     <?php endif; ?>
                                 </div>

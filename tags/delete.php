@@ -1,8 +1,8 @@
 <?php
-include_once '../config/database.php';
+include_once '../config/connection.php';
 include_once '../models/tags.php';
 
-$database = new Database();
+$database = new Connection();
 $db = $database->getConnection();
 if (isset($_GET['del'])) {
     $id = $_GET['del'];
@@ -27,7 +27,7 @@ if (isset($_GET['del'])) {
     <div class="container mt-5">
         <div class="row">
             <div class="col">
-                <h1>Are you sure you want to delete <a class="btn btn-sm btn-success col-1" href="index.php">No</a> &nbsp; <a class="btn btn-sm btn-danger col-1" href="delete.php?del=<?php echo $_GET['id'] ?>">yes</a></h1>
+                <h1>Are you sure you want to delete <a class="btn btn-sm btn-success col-1" href="index.php">No</a> &nbsp; <a class="btn btn-sm btn-danger col-1" href="delete.php?del=<?= $_GET['id'] ?>">yes</a></h1>
             </div>
         </div>
     </div>
